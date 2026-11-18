@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>أداة قصة فلو — بوابتك لعوالم الخيال والابداع</title>
+
+<!-- استدعاء خطوط عربية مستوحاة من القصص والخيال -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Marhey:wght@500;700&family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #0c061c;
+  --fg: #fcf8ff;
+  --card: rgba(24, 15, 46, 0.78);
+  --bd: rgba(186, 126, 255, 0.32);
+  --ac: #d946ef;
+  --on: #ffffff;
+  --mu: #cdbfe3;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* {
+  box-sizing: border-box;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: #070312;
+  color: var(--fg);
+  font-family: 'Readex Pro', system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
+  font-size: 14.5px;
+  line-height: 1.6;
+  padding: 14px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* خلفية القلعة الخيالية */
+#epic-castle-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  z-index: 0;
+  pointer-events: none;
+  transition: background-image 0.5s ease;
+}
+
+#epic-castle-vignette {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(14, 8, 28, 0.18) 0%,
+    rgba(17, 10, 36, 0.45) 26%,
+    rgba(12, 6, 26, 0.85) 56%,
+    rgba(7, 3, 16, 0.96) 86%,
+    #05020c 100%
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+#magic-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.55;
+}
+
+/* الحاوية الرئيسية الموسعة (تعديل 3) */
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+/* لافتة البانر العلوية (تعديل 1: العنوان والوصف فقط) */
+.fantasy-hero-banner {
+  position: relative;
+  width: 100%;
+  min-height: 230px;
+  border-radius: 22px;
+  overflow: hidden;
+  margin-bottom: 14px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.7), 0 0 32px rgba(245, 158, 11, 0.25);
+  border: 1.5px solid rgba(251, 191, 36, 0.45);
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.banner-overlay-content {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 24px 20px 18px;
+  background: linear-gradient(to bottom, rgba(10, 4, 20, 0) 0%, rgba(13, 6, 28, 0.65) 45%, rgba(9, 4, 18, 0.95) 100%);
+  text-align: center;
+  z-index: 2;
+}
+
+h1 {
+  font-family: 'Marhey', cursive, sans-serif;
+  font-size: clamp(22px, 4.5vw, 32px);
+  font-weight: 700;
+  margin: 0 0 6px;
+  background: linear-gradient(135deg, #ffffff 0%, #fef08a 30%, #f59e0b 65%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 6px 25px rgba(245, 158, 11, 0.45);
+}
+
+.subtitle {
+  color: #f3e8ff;
+  font-size: 14.5px;
+  margin: 0 auto;
+  font-weight: 400;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.85);
+  opacity: 0.95;
+}
+
+/* شريط الأدوات العلوي */
+.top-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(22, 12, 44, 0.82);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  padding: 10px 14px;
+  border-radius: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.45);
+  backdrop-filter: blur(14px);
+}
+
+/* شريط التبويبات الفصولية */
+nav#nav {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 6px 2px 12px;
+  margin-bottom: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(168, 85, 247, 0.45) transparent;
+}
+
+nav#nav::-webkit-scrollbar { height: 5px; }
+nav#nav::-webkit-scrollbar-thumb { background: rgba(168, 85, 247, 0.45); border-radius: 10px; }
+
+nav button {
+  flex: none;
+  background: rgba(30, 20, 56, 0.82);
+  color: #e2d8f3;
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  border-radius: 22px;
+  padding: 8px 16px;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28);
+}
+
+nav button:hover {
+  color: #fff;
+  border-color: rgba(244, 114, 182, 0.7);
+  transform: translateY(-2px);
+}
+
+nav button.on {
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  color: #ffffff;
+  border-color: #f472b6;
+  font-weight: 600;
+  box-shadow: 0 6px 22px rgba(236, 72, 153, 0.5);
+  transform: translateY(-1px) scale(1.02);
+}
+
+/* البطاقات الزجاجية */
+.card {
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 16px;
+  padding: 16px;
+  margin: 12px 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(14px);
+  transition: border-color 0.25s ease;
+}
+
+.card:hover {
+  border-color: rgba(247, 182, 91, 0.5);
+}
+
+h3 {
+  font-family: 'Marhey', cursive, sans-serif;
+  color: #ffd6a5;
+  margin: 0 0 12px 0;
+  font-size: 17px;
+  border-bottom: 1px dashed rgba(255, 214, 165, 0.25);
+  padding-bottom: 6px;
+}
+
+.card b {
+  color: #e0aaff;
+  font-size: 14.5px;
+}
+
+label {
+  display: block;
+  font-size: 12.5px;
+  color: var(--mu);
+  font-weight: 500;
+  margin: 8px 0 3px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid rgba(162, 114, 235, 0.38);
+  border-radius: 10px;
+  background: rgba(14, 9, 28, 0.88);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 13.5px;
+  transition: all 0.2s ease;
+}
+
+select {
+  height: 40px;
+  text-overflow: ellipsis;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #d946ef;
+  box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.25);
+  background: rgba(22, 13, 44, 0.96);
+}
+
+select option {
+  background: #190f33;
+  color: #ffffff;
+}
+
+textarea {
+  min-height: 88px;
+  resize: vertical;
+}
+
+.out {
+  min-height: 145px;
+  direction: ltr;
+  text-align: left;
+  font-family: "JetBrains Mono", monospace, sans-serif;
+  font-size: 12.5px;
+  background: rgba(7, 4, 15, 0.92) !important;
+  color: #bbf7d0 !important;
+  border: 1px solid rgba(52, 211, 153, 0.35) !important;
+}
+
+/* الأزرار التفاعلية الملونة */
+button.p, button.s, label.s {
+  font-family: inherit;
+  border: 0;
+  border-radius: 11px;
+  padding: 9px 16px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 6px 4px 2px 0;
+  transition: all 0.22s ease;
+  user-select: none;
+}
+
+button.p:active, button.s:active {
+  transform: scale(0.97);
+}
+
+button.p {
+  background: linear-gradient(135deg, #9333ea 0%, #db2777 55%, #f97316 100%);
+  color: #ffffff;
+  box-shadow: 0 5px 18px rgba(219, 39, 119, 0.38);
+}
+
+button.p:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(219, 39, 119, 0.58);
+}
+
+button.s, label.s {
+  background: linear-gradient(135deg, rgba(63, 43, 102, 0.88) 0%, rgba(37, 23, 67, 0.96) 100%);
+  color: #f1e9fc;
+  border: 1px solid rgba(168, 85, 247, 0.38);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+button.s:hover, label.s:hover {
+  background: linear-gradient(135deg, rgba(93, 62, 153, 0.95) 0%, rgba(55, 34, 100, 1) 100%);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+button#rst {
+  background: linear-gradient(135deg, rgba(140, 29, 64, 0.8) 0%, rgba(85, 12, 34, 0.92) 100%);
+  border-color: rgba(244, 63, 94, 0.45);
+  color: #ffe4e6;
+}
+
+.g {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  align-items: end;
+  gap: 10px;
+}
+
+.g > * { min-width: 0; }
+
+/* تعديل 5: صف واحد لحقول الملامح والزي ورقم Seed */
+.char-lock-row {
+  display: grid;
+  grid-template-columns: 1.3fr 1.3fr 0.7fr;
+  gap: 10px;
+  align-items: end;
+}
+@media (max-width: 768px) {
+  .char-lock-row { grid-template-columns: 1fr; }
+}
+
+/* تعديل 7: تنسيق فئة الأنيميشن ونوعه والحركة المناسبة في سطر واحد */
+.anim-inline-wrap {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  background: rgba(16, 10, 32, 0.65);
+  border: 1px solid rgba(168, 85, 247, 0.28);
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin-top: 4px;
+}
+.anim-inline-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 240px;
+}
+.anim-inline-item span {
+  white-space: nowrap;
+  font-size: 13px;
+  color: #ffd6a5;
+  font-weight: 600;
+}
+.anim-inline-item select {
+  flex: 1;
+  margin: 0 !important;
+}
+
+.chip {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  margin: 3px 6px 3px 0;
+  padding: 4px 11px;
+  background: rgba(36, 21, 66, 0.65);
+  border: 1px solid rgba(168, 85, 247, 0.28);
+  border-radius: 18px;
+  color: #e9d5ff;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.chip input {
+  width: auto;
+  accent-color: #d946ef;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.row > div { min-width: 0; }
+
+.note {
+  color: var(--mu);
+  font-size: 13px;
+}
+
+#st {
+  color: #fef08a;
+  font-weight: 600;
+}
+
+details > summary {
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+/* معاينات الصور الواقعية للكاميرا والجو العام (تعديل 2: بدون نصوص داخل الصورة) */
+.pv {
+  aspect-ratio: 16/9;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid rgba(186, 126, 255, 0.35);
+  background: #0a0614;
+}
+
+.pv-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform-origin: center center;
+}
+
+.fx {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.tl { cursor: pointer; }
+.tl:hover .pv { outline: 2px solid #f472b6; }
+.gal {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+  gap: 8px;
+}
+.tl .note {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 4px;
+  color: #f3e8ff;
+}
+[id^=pv_] { max-width: 190px; }
+#inf_cam > .card > div[style], #inf_atm > .card > div[style] { max-width: 240px !important; }
+
+/* حركات الكاميرا التفاعلية على الصور الواقعية */
+.c-push .pv-img { animation: kpush 3.2s ease-in-out infinite alternate; }
+@keyframes kpush { from { transform: scale(1); } to { transform: scale(1.45); } }
+.c-pull .pv-img { animation: kpull 3.2s ease-in-out infinite alternate; }
+@keyframes kpull { from { transform: scale(1.45); } to { transform: scale(1); } }
+.c-pan .pv-img { animation: kpan 3.2s ease-in-out infinite alternate; }
+@keyframes kpan { from { transform: scale(1.25) translateX(8%); } to { transform: scale(1.25) translateX(-8%); } }
+.c-tilt .pv-img { animation: ktilt 3.2s ease-in-out infinite alternate; }
+@keyframes ktilt { from { transform: scale(1.3) translateY(8%); } to { transform: scale(1.3) translateY(-8%); } }
+.c-track .pv-img { animation: ktrack 3s linear infinite alternate; }
+@keyframes ktrack { from { transform: scale(1.2) translateX(-6%); } to { transform: scale(1.2) translateX(6%); } }
+.c-high .pv-img { transform: scale(1.18) translateY(-4%); }
+.c-low .pv-img { transform: scale(1.18) translateY(4%); }
+.c-ots .pv-img { transform: scale(1.15); }
+.c-close .pv-img { animation: kcl 3s ease-in-out infinite alternate; }
+@keyframes kcl { from { transform: scale(1.15); } to { transform: scale(1.65); } }
+.c-wide .pv-img { transform: scale(1); }
+.c-hand .pv-img { animation: khd 0.7s ease-in-out infinite; }
+@keyframes khd { 0%,100%{transform:scale(1.12) translate(0,0)} 25%{transform:scale(1.12) translate(-1.5%,1%)} 50%{transform:scale(1.12) translate(1.2%,-1%)} 75%{transform:scale(1.12) translate(-0.8%,-1.2%)} }
+.c-orbit .pv-img { animation: kor 3.5s ease-in-out infinite alternate; }
+@keyframes kor { from { transform: scale(1.25) rotate(-3deg) translateX(5%); } to { transform: scale(1.25) rotate(3deg) translateX(-5%); } }
+.c-fpv .pv-img { animation: kfpv 2.4s ease-in-out infinite alternate; }
+@keyframes kfpv { from { transform: scale(1) rotate(0deg); } to { transform: scale(1.55) rotate(5deg); } }
+.c-whip .pv-img { animation: kwhip 1.6s cubic-bezier(.8,0,.2,1) infinite; }
+@keyframes kwhip { 0%,35%{transform:scale(1.25) translateX(10%)} 65%,100%{transform:scale(1.25) translateX(-10%)} }
+.c-dutch .pv-img { transform: rotate(-10deg) scale(1.28); }
+
+/* مؤثرات الجو العام */
+.a-rain .fx { background: repeating-linear-gradient(105deg, rgba(255,255,255,0.45) 0 1px, transparent 1px 9px); animation: krain 0.35s linear infinite; }
+@keyframes krain { to { background-position: -20px 40px; } }
+.a-fog .fx { background: rgba(235,240,245,0.35); animation: kfog 3s ease-in-out infinite alternate; }
+@keyframes kfog { from { opacity: 0.2; } to { opacity: 0.6; } }
+.a-sand .fx { background: rgba(215,155,75,0.35) repeating-linear-gradient(0deg, rgba(255,255,255,0.12) 0 2px, transparent 2px 7px); animation: ksand 1s linear infinite; }
+@keyframes ksand { to { background-position: 60px 0; } }
+.a-snow .fx { background: radial-gradient(circle, #fff 0 1.5px, transparent 2px) 0 0/14px 14px; animation: ksnow 1.4s linear infinite; }
+@keyframes ksnow { to { background-position: 6px 14px; } }
+.a-rays .fx { background: repeating-linear-gradient(115deg, rgba(255,245,200,0.32) 0 14px, transparent 14px 46px); animation: krays 3s ease-in-out infinite alternate; }
+@keyframes krays { from { opacity: 0.35; } to { opacity: 0.85; } }
+.a-fest .fx { background: radial-gradient(circle, #f44 0 2px, transparent 3px) 0 0/22px 26px, radial-gradient(circle, #38bdf8 0 2px, transparent 3px) 11px 13px/22px 26px; animation: ksnow 1.6s linear infinite; }
+
+/* لوحة المشاهد للطباعة */
+#board { position: fixed; inset: 0; background: #0c061c; color: #fff; z-index: 99; overflow: auto; padding: 16px; }
+#board table { width: 100%; border-collapse: collapse; font-size: 12px; }
+#board td, #board th { border: 1px solid var(--bd); padding: 6px; vertical-align: top; }
+#board .pr { direction: ltr; text-align: left; font-size: 11px; white-space: pre-wrap; min-width: 260px; }
+@media print {
+  body.boarding > *:not(#board) { display: none !important; }
+  #board { position: static; background: #fff; color: #000; }
+  .noprint { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div id="epic-castle-bg"></div>
+<div id="epic-castle-vignette"></div>
+<canvas id="magic-canvas"></canvas>
+
+<div class="container">
+  <!-- لافتة البانر العلوية -->
+  <div class="fantasy-hero-banner">
+    <div class="banner-overlay-content">
+      <h1>من خيال الفكرة إلى برومتات سينمائية ساحرة</h1>
+      <p class="subtitle">بوابتك لعوالم الخيال والابداع</p>
+    </div>
+  </div>
+
+  <!-- شريط التحكم العلوي -->
+  <div class="top-bar">
+    <label class="s" style="margin:0">
+      🖼️ خلفية قصصية
+      <input type="file" id="bg-file-picker" accept="image/*" style="display:none" onchange="loadCustomBg(event)">
+    </label>
+    <button class="s" onclick="saveP()">💾 حفظ المشروع</button>
+    <button class="s" onclick="loadP()">📂 استرجاع</button>
+    <button class="s" onclick="expP()">📤 تصدير كنص</button>
+    <button class="s" onclick="impP()">📥 استيراد</button>
+    <button class="s" id="rst" onclick="resetAll(this)">🗑️ بدء من جديد</button>
+    <span id="st" class="note"></span>
+  </div>
+
+  <div class="row" style="margin-bottom:8px">
+    <input id="pn" placeholder="اسم المشروع/القالب للحفظ" style="flex:1;min-width:150px">
+    <select id="ps" style="flex:1;min-width:150px"></select>
+    <button class="s" onclick="delP()">❌ حذف المحدد</button>
+    <button class="s" onclick="saveT()">📑 حفظ كقالب</button>
+  </div>
+
+  <div id="pj"></div>
+  <nav id="nav"></nav>
+  <div id="v"></div>
+  <footer id="cr"></footer>
+</div>
+
+<script>
+/* تأثيرات النجوم والشهب المتلألئة */
+(function initCanvas() {
+  const canvas = document.getElementById('magic-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let width, height, particles = [];
+  function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+  window.addEventListener('resize', resize);
+  resize();
+  class Star {
+    constructor() { this.reset(); }
+    reset() {
+      this.x = Math.random() * width;
+      this.y = Math.random() * height;
+      this.size = Math.random() * 2 + 0.6;
+      this.alpha = Math.random() * 0.8 + 0.2;
+      this.speed = Math.random() * 0.02 + 0.008;
+      this.color = ['#ffffff', '#f472b6', '#c084fc', '#93c5fd', '#fde047'][Math.floor(Math.random() * 5)];
+      this.dir = Math.random() > 0.5 ? 1 : -1;
+    }
+    update() {
+      this.alpha += this.speed * this.dir;
+      if (this.alpha > 0.95) { this.alpha = 0.95; this.dir = -1; }
+      else if (this.alpha < 0.15) { this.alpha = 0.15; this.dir = 1; }
+    }
+    draw() {
+      ctx.save();
+      ctx.globalAlpha = this.alpha;
+      ctx.fillStyle = this.color;
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = this.color;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+  for (let i = 0; i < 70; i++) particles.push(new Star());
+  function loop() {
+    ctx.clearRect(0, 0, width, height);
+    for (let p of particles) { p.update(); p.draw(); }
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+const DEFAULT_FANTASY_BG = "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1920&auto=format&fit=crop";
+function setSiteBackground(imgSrc) {
+  const bg = document.getElementById('epic-castle-bg');
+  const banner = document.querySelector('.fantasy-hero-banner');
+  if (bg) bg.style.backgroundImage = `url('${imgSrc}')`;
+  if (banner) banner.style.backgroundImage = `url('${imgSrc}')`;
+}
+function loadCustomBg(e) {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    const dataUrl = evt.target.result;
+    try { localStorage.setItem('flow_custom_bg', dataUrl); } catch (err) {}
+    setSiteBackground(dataUrl);
+    msg("✨ تم تحديث الخلفية القصصية وحفظها");
+  };
+  reader.readAsDataURL(file);
+}
+(function applyInitialBg() {
+  let savedBg = null;
+  try { savedBg = localStorage.getItem('flow_custom_bg'); } catch (e) {}
+  setSiteBackground(savedBg || DEFAULT_FANTASY_BG);
+})();
+
+/* ---------- الكود الأساسي للأداة بجميع أوامرها ومكوناتها وحقوقها ---------- */
+const $=s=>document.querySelector(s),esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const W="one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty".split(" ");
+const sw=n=>n<=20?W[n-1]:["","","twenty","thirty","forty","fifty","sixty","seventy"][Math.floor(n/10)]+(n%10?"_"+W[n%10-1]:"");
+const G={"ولد":"boy","بنت":"girl","رجل":"man","امرأة":"woman","شيخ كبير":"elderly man","عجوز":"elderly woman","طفل رضيع":"baby","حيوان":"animal character"};
+const PL={"الحديقة":"a lush public garden","المنزل (الصالة)":"a family living room","غرفة النوم":"a bedroom","المطبخ":"a kitchen","المدرسة":"a school courtyard","الفصل الدراسي":"a classroom","الشارع":"a neighborhood street","السوق":"a traditional market","القرية":"a village","المزرعة":"a farm","الشاطئ":"a beach","الصحراء":"a desert","الغابة":"a forest","الجبل":"a mountain","المسجد":"a mosque exterior","المستشفى":"a hospital","الملعب":"a playground and sports field"};
+const CAM={"ثابتة":"static locked-off camera","تقريب تدريجي":"slow push-in","ابتعاد":"slow pull-back","بانوراما":"smooth pan","إمالة":"tilt","تتبع الشخصية":"tracking shot following the character","لقطة مرتفعة":"high-angle shot","لقطة منخفضة":"low-angle shot","فوق الكتف":"over-the-shoulder shot","لقطة قريبة للوجه":"close-up on the face","لقطة واسعة":"wide establishing shot","كاميرا محمولة":"gentle handheld camera","دوران حول الشخصية":"slow orbit around the character"};
+const ATM={"ضوء نهار":"bright sunny daylight","شروق":"soft sunrise light","غروب ذهبي":"golden-hour sunset","ليل بقمر":"moonlit night","مطر":"light rain with wet reflections","غيوم":"heavy overcast clouds","ضباب":"misty fog","عاصفة رملية":"sandstorm haze","ثلج":"falling snow","رياح خفيفة":"gentle breeze","إضاءة داخلية دافئة":"warm indoor lighting","ظلال درامية":"dramatic shadows","أجواء احتفال":"festive celebratory ambience"};
+const VC={"ذكر بالغ":"adult male","أنثى بالغة":"adult female","ولد":"young boy","بنت":"young girl","شيخ":"elderly man","عجوز":"elderly woman"};
+const VG={"ولد":"ولد","بنت":"بنت","رجل":"ذكر بالغ","امرأة":"أنثى بالغة","شيخ كبير":"شيخ","عجوز":"عجوز"};
+const VS={"رفيع":"thin high-pitched","رخيم":"smooth resonant","جهوري":"booming powerful","غليظ":"deep rough","دافئ حنون":"warm tender","هادئ":"calm soft","حاد":"sharp","مبحوح":"hoarse","طفولي مرح":"playful childlike","متهدج حزين":"trembling sorrowful","صارم":"stern"};
+const PACE={"بطيء":"slow","متوسط":"medium","سريع":"fast"},TONE={"ودود":"friendly","غاضب":"angry","حزين":"sad","متحمس":"excited"};
+const GN={"عائلية":"family emotional","اجتماعية":"social","أخلاقية":"moral lesson","حرب وبطولة":"war and heroism","قرية وريف":"village life","حيوانات":"animal story","سحرية":"magical moral","تعليمية للأطفال":"educational for kids","مغامرات":"adventure","كوميدية":"comedy"};
+const STY=["مشهد حواري","افتتاحي","صراع","ذروة","عاطفي","حركة","ختام"];
+const LANG={"العربية":["Arabic","Arab Muslim characters, Gulf/Arabian setting, Arab dress and names"],"Hindi":["Hindi","Indian characters, Indian setting, Indian dress and names"],"Urdu":["Urdu","Pakistani Muslim characters, Pakistani setting, Muslim dress and names"],"English":["English","British/American characters with matching Western setting"],"Bengali":["Bengali","Bengali characters and setting"]};
+const AR=["16:9","9:16","1:1","4:5","4:3","21:9"];
+const STYLE={toString:()=>stl().a+", full color, "+stl().l+", soft cinematic light, subtle depth of field, "+palEn()+", detailed culturally accurate backgrounds, "+S.ar+" aspect ratio, high detail. Avoid: "+stl().x+", watermark, text artifacts, burned-in subtitles, distorted hands or faces, extra fingers, poor facial symmetry, jerky movement, unnatural morphing, oversaturated colors, floating objects."};
+const TABS=["1 القصة","2 الشخصيات","3 المشاهد","4 الأصوات","5 الكاميرا","6 الجو العام","7 الفيديو النهائي"];
+const mkC=i=>({name:"",fn:"character_"+sw(i+1),type:"ولد",age:"8",trait:"",look:"",lock:"",vc:"",vs:[],pace:"متوسط",tone:"ودود"});
+const mkS=()=>({place:"الحديقة",ty:"مشهد حواري",act:"",cs:[],cam:"",atm:"",sfx:"",st:"لم يُولّد",d:[{s:"0",t:""},{s:"0",t:""}]});
+const S={tab:0,lang:"العربية",mode:"gen",genre:"أخلاقية",dur:"3",idea:"",own:"",script:"",chars:[mkC(0),mkC(1)],scenes:[mkS(),mkS(),mkS()],path:"B",proj:"my_flow_story",gc:"",ga:"",out:{},ar:"16:9",items:{},vr:{},vst:"2D كرتون"};
+const get=k=>k.split(".").reduce((o,p)=>o?.[p],S);
+const set=(k,v)=>{const p=k.split("."),l=p.pop();p.reduce((o,x)=>o[x],S)[l]=v};
+document.addEventListener("input",e=>{const t=e.target,k=t.dataset.k;if(!k)return;
+ if(t.type=="checkbox"){const a=get(k)||[],v=t.dataset.v;set(k,t.checked?[...a,v]:a.filter(x=>x!=v))}else set(k,t.value)});
+document.addEventListener("change",e=>{if(e.target.dataset.r)render()});
+const I=(k,ph,l)=>`<input data-k="${k}" value="${esc(get(k))}" placeholder="${ph||""}" ${l?`list="${l}"`:""}>`;
+const TA=(k,ph)=>`<textarea data-k="${k}" placeholder="${ph||""}">${esc(get(k))}</textarea>`;
+const SEL=(k,arr,r)=>`<select data-k="${k}" ${r?'data-r="1"':""}>${arr.map(x=>`<option ${get(k)==x?"selected":""}>${x}</option>`).join("")}</select>`;
+const CB=(k,v,lab)=>`<label class="chip"><input type="checkbox" data-k="${k}" data-v="${v}" ${(get(k)||[]).includes(String(v))?"checked":""}>${lab}</label>`;
+const dl=(id,a)=>`<datalist id="${id}">${a.map(x=>`<option value="${x}">`).join("")}</datalist>`;
+const F=(l,h)=>`<label>${l}</label>${h}`;
+const en=(m,v)=>m[v]||v;
+const tp=c=>en(G,c.type),dial=()=>dialT(),cult=()=>cultT();
+const desc=c=>c.lock?`${c.lock}, ${cult()}`:`${tp(c)} aged ${c.age}${c.trait?", "+c.trait:""}${c.look?", "+c.look:""}${c.face?", fixed facial features: "+c.face:""}${c.outf?", costume lock: "+c.outf:""}, ${cult()}`;
+const vd=c=>`${c.fn.replace("character","voice")}: ${en(VC,c.vc||vcAuto(c))} voice, ${(c.vs.length?c.vs:["هادئ"]).map(x=>en(VS,x)).join(", ")} timbre, ${en(PACE,c.pace)} pace, ${en(TONE,c.tone)} tone, natural ${dial()} accent, clear lip-synced delivery`;
+const places=()=>[...new Set(S.scenes.map(s=>s.place))];
+const envFn=p=>String((S.pf&&S.pf[p])||"location_"+(PLSLUG[p]||sw(places().indexOf(p)+1))).toLowerCase().replace(/[^a-z0-9_]+/g,"_").replace(/^_+|_+$/g,"").replace(/^([a-z0-9]+)$/,"location_$1")||"location_one";
+const camT=s=>s.cam?(CAMV[s.cam]?CAMV[s.cam][+s.cv||0]:en(CAM,s.cam)):"camera move chosen to suit the action";
+const atmT=s=>s.atm?(ATMV[s.atm]?ATMV[s.atm][+s.av||0]:en(ATM,s.atm)):"natural lighting matching the scene mood";
+const sc=s=>[...new Set([...s.cs,...s.d.filter(d=>d.t).map(d=>String(d.s))])].map(j=>S.chars[+j]).filter(Boolean);
+function box(id){return `<textarea class="out" readonly onclick="this.select()">${esc(S.out[id])}</textarea><button class="s" onclick="cp(this)">📋 نسخ</button>`}
+function cp(b){const t=b.previousElementSibling;t.select();try{navigator.clipboard.writeText(t.value)}catch(e){document.execCommand("copy")}b.textContent="✅ تم النسخ";setTimeout(()=>b.textContent="📋 نسخ",1500)}
+function show(id,txt){if(id=="pack")txt+="\n\n"+crT();S.out[id]=txt;$("#o_"+id).innerHTML=box(id)}
+const OUT=id=>`<div id="o_${id}">${S.out[id]?box(id):""}</div>`;
+function setN(kind,n){n=Math.max(1,Math.min(+n||1,kind=="chars"?10:75));const a=S[kind];while(a.length<n)a.push(kind=="chars"?mkC(a.length):mkS());a.length=n;render()}
+const CNT=(kind,lab)=>`<div class="row" style="justify-content:flex-start;align-items:flex-end;gap:8px"><div style="width:120px">${F(lab,`<input type="number" id="cn" min="1" value="${S[kind].length}">`)}</div><button class="p" onclick="setN('${kind}',$('#cn').value)">تطبيق العدد</button></div>`;
+const nav=()=>{$("#nav").innerHTML=TABS.map((t,i)=>`<button class="${i==S.tab?"on":""}" onclick="S.tab=${i};render()">${t}</button>`).join("")};
+/* تعديل 4: تصحيح اتجاه سهم التالي */
+const step=()=>`<div class="row">${S.tab>0?`<button class="s" onclick="S.tab--;render()">➡️ رجوع وتعديل</button>`:"<span></span>"}${S.tab<6?`<button class="p" onclick="S.tab++;render();scrollTo(0,0)">التالي ⬅️</button>`:""}</div>`;
+
+/* ---------- التبويبات ---------- */
+const V=[
+()=>`<div class="card"><h3>القصة</h3>${F("مصدر القصة",`<select data-k="mode" data-r="1"><option value="gen" ${S.mode=="gen"?"selected":""}>الأداة تولّد القصة</option><option value="own" ${S.mode=="own"?"selected":""}>أكتب قصتي بنفسي</option></select>`)}
+<div class="g">${langUI()}${F("نوع القصة",I("genre","اختر أو اكتب","gl"))}${F("المدة (دقائق، حد أقصى 10)",I("dur"))}${F("حجم الفيديو (والمنصة المناسبة)",ARSEL())}${F("نمط الشخصيات والفيديو",I("vst","","vsl"))}</div>
+${(S.model=S.model||"Google Flow (Veo)",S.mp=S.mp||{...MD[S.model]},"")}<h3>🎯 الهدف التعليمي</h3><div class="g">${F("الفئة العمرية",I("age","","agl"))}${F("الهدف التعليمي / العبرة",I("goal","مثال: الصدق، التعاون"))}</div>
+<h3>🎞️ موقع/موديل توليد الفيديو</h3><select style="max-width:260px" onchange="setModel(this.value)">${Object.keys(MD).map(n=>`<option ${S.model==n?"selected":""}>${n}</option>`).join("")}</select>
+<details><summary class="note">⚙️ إعدادات الموديل المتقدمة (اختيارية)</summary><div class="g">${F("أقصى مدة للمقطع (ثانية)",I("mp.sec"))}${F("النسب المدعومة",I("mp.ars"))}${F("الصوت والحوار",`<select data-k="mp.au"><option value="1" ${+S.mp.au?"selected":""}>يدعم صوتاً وحواراً</option><option value="0" ${+S.mp.au?"":"selected"}>لا يدعم (مقطع صامت)</option></select>`)}${F("حقل Negative منفصل",`<select data-k="mp.neg"><option value="1" ${+S.mp.neg?"selected":""}>نعم (يُفصل سطر NEGATIVE)</option><option value="0" ${+S.mp.neg?"":"selected"}>لا (يُدمج في البرومت)</option></select>`)}</div><p class="note">💡 ${esc(S.mp.tip||"")} — هذه القيم افتراضية تقريبية وقدرات الموديلات تتغير، تحقق منها وعدّلها يدوياً.</p></details>
+${S.mode=="gen"?F("فكرة أو موضوع (اختياري)",TA("idea","مثال: طفل يتعلم الصدق")):F("اكتب قصتك أو حوارك",TA("own","ألصق قصتك هنا"))}
+<button class="p" onclick="gStory()">توليد برومت السكريبت</button><button class="s" onclick="gRev()">🔎 برومت مراجعة السكريبت</button><button class="s" onclick="gIdeas()">5 أفكار للقصة</button>
+${OUT("story")}<p class="note">الصق البرومت في Gemini أو Claude، ثم الصق الحوار الناتج هنا:</p>${F("السكريبت النهائي (حوار فقط)",TA("script","CHARACTER: \"...\""))}</div>${step()}`,
+
+()=>`<div class="card"><h3>الشخصيات</h3><div class="card">${F("نمط الشخصيات (2D كرتون، 3D، واقعي، أنمي… أو اكتب نمطاً)",I("vst","","vsl"))}<p class="note">ينطبق على كل البرومتات. بعد تغييره اضغط زر التوليد من جديد.</p>${F("إضافة شخصية من المكتبة المحفوظة",libSel())}</div><div class="card"><b>سحب الشخصيات من السكريبت</b><p class="note">الزر الأول يسحب أسماء المتحدثين فوراً. الزر الثاني يجهّز برومت تلصقه في Gemini أو Claude ليستنتج العمر والملامح والملابس، ثم تلصق الناتج بالأسفل. كل شيء قابل للتعديل بعدها.</p><button class="p" onclick="extractChars();guessAll()">👥 سحب الأسماء من السكريبت</button><button class="s" onclick="gCX()">🧠 برومت استخراج الملامح والملابس</button>${OUT("cx")}${F("الصق ناتج الذكاء الاصطناعي هنا (JSON)",TA("cjson","[{\"name\":\"...\"}]"))}<button class="p" onclick="importCJ()">📥 استيراد التفاصيل إلى الشخصيات</button></div>${CNT("chars","عدد الشخصيات")}</div>${S.chars.map((c,i)=>`<div class="card"><b>شخصية ${i+1}</b><div class="g">${F("الاسم",I(`chars.${i}.name`,"اسم الشخصية"))}${F("اسم الملف (إنجليزي_بشرطة)",I(`chars.${i}.fn`))}${F("النوع",I(`chars.${i}.type`,"","gtl"))}${F("السن",I(`chars.${i}.age`))}</div>${F("الدور/الطباع",I(`chars.${i}.trait`,"شجاع، خجول…"))}${F("وصف ثابت نهائي (اختياري، يُستخدم بدل الباقي ليثبت الشكل)",I(`chars.${i}.lock`,"وصف كامل ثابت"))}<div class="char-lock-row">${F("ملامح دائمة (عيون، أنف، شعر)",I(`chars.${i}.face`,"عيون عسلية، أنف صغير، شعر أسود مجعد"))}${F("الزي الثابت (قماش، أزرار، حذاء، إكسسوار)",I(`chars.${i}.outf`,"ثوب أبيض بأزرار فضية، حذاء بني، قلادة"))}${F("رقم Seed (اختياري)",I(`chars.${i}.seed`,"12345"))}</div><button class="s" onclick="libSave(${i})">📚 حفظ في المكتبة</button>${F("الشكل والملابس (اختياري)",I(`chars.${i}.look`,"ثوب أبيض، شعر أسود…"))}</div>`).join("")}
+<button class="p" onclick="gen('chars')">توليد برومتات الشخصيات</button>${OUTG("chars")}${step()}`,
+
+()=>`<div class="card"><h3>المشاهد</h3>${CNT("scenes","عدد المشاهد (كل مشهد ≤ 8 ثوانٍ)")}<p class="note">يُقترح: المدة بالثواني ÷ 8 = ${Math.ceil((+S.dur||3)*60/8)} مشهد.</p></div>${S.scenes.map((s,i)=>`<div class="card"><b>مشهد ${i+1}</b><div class="g">${F("المكان",I(`scenes.${i}.place`,"اختر أو اكتب مكاناً","pl"))}${F("نوع المشهد",I(`scenes.${i}.ty`,"","stl"))}${F("جزء القصة",I(`scenes.${i}.ac`,"تلقائي","actl"))}</div>${F("ماذا يحدث في المشهد؟ (اختياري)",TA(`scenes.${i}.act`,"مثال: الولد يمسك الكتاب ويبتسم لجدته بينما تمسح على رأسه")) }<p class="note">اكتب هنا جملة قصيرة تصف حركة الشخصيات ومشاعرها وما يراه المشاهد (ليس الحوار، فهو في تبويب 7). إن تركته فارغاً يتصرف الموديل بحرية حسب الحوار.</p><label>الشخصيات الظاهرة في المشهد (حدّد من يظهر ولو لم يتكلم، والمتحدثون يظهرون تلقائياً)</label><div>${S.chars.map((c,j)=>CB(`scenes.${i}.cs`,j,c.name||c.fn)).join("")}</div><div class="note">🗣️ المتحدثون في هذا المشهد (تُسحب من الحوار تلقائياً): ${spk(s)}</div></div>`).join("")}
+<button class="s" onclick="autoS()">✨ اقتراح تلقائي حسب نوع القصة</button><button class="p" onclick="gen('scenes')">برومتات صور المشاهد</button><button class="s" onclick="gen('env')">برومتات الأماكن</button>${OUTG("scenes")}${OUTG("env")}${step()}`,
+
+()=>`<div class="card"><h3>الأصوات</h3><p class="note">البرومت يُضاف تلقائياً لكل شخصية داخل برومت الفيديو.</p></div>${S.chars.map((c,i)=>`<div class="card"><b>${esc(c.name||c.fn)}</b><div class="g">${F("الفئة (تُسحب تلقائياً من نوع الشخصية وسنها، غيّرها إن أردت)",I(`chars.${i}.vc`,vcAuto(c),"vcl"))}${F("السرعة",SEL(`chars.${i}.pace`,Object.keys(PACE)))}${F("النبرة",I(`chars.${i}.tone`,"","tl"))}</div><label>نمط الصوت (متعدد)</label>${Object.keys(VS).map(v=>CB(`chars.${i}.vs`,v,v)).join("")}</div>`).join("")}
+<p class="note">✅ وصف الصوت لكل شخصية يُدمج تلقائياً في برومت الفيديو (تبويب 7) مع الموسيقى والمؤثرات، فلا حاجة لبرومت منفصل.</p>${step()}`,
+
+()=>`<div class="card"><h3>حركات الكاميرا</h3><div class="row"><div style="flex:1">${F("تطبيق حركة على كل المشاهد",I("gc","اختر حركة","cl"))}</div><button class="p" onclick="S.scenes.forEach(s=>s.cam=S.gc);render()">تطبيق على الكل</button></div></div>${S.scenes.map((s,i)=>`<div class="card"><b>مشهد ${i+1}</b> <span class="note">${esc(s.place)}</span>${I(`scenes.${i}.cam`,"تلقائي حسب الحدث","cl")}</div>`).join("")}${step()}`,
+
+()=>`<div class="card"><h3>الجو العام</h3><div class="row"><div style="flex:1">${F("تطبيق جو على كل المشاهد",I("ga","اختر جواً","al"))}</div><button class="p" onclick="S.scenes.forEach(s=>s.atm=S.ga);render()">تطبيق على الكل</button></div></div>${S.scenes.map((s,i)=>`<div class="card"><b>مشهد ${i+1}</b> <span class="note">${esc(s.place)}</span>${I(`scenes.${i}.atm`,"تلقائي","al")}</div>`).join("")}${step()}`,
+
+()=>`<div class="card"><h3>الفيديو النهائي</h3><div class="g">${F("المسار",`<select data-k="path"><option value="A" ${S.path=="A"?"selected":""}>A: بعد صور المشاهد</option><option value="B" ${S.path=="B"?"selected":""}>B: نص إلى فيديو</option></select>`)}${F("اسم مشروع Flow",I("proj"))}${F("حجم الفيديو (والمنصة المناسبة)",ARSEL())}${F("نمط الشخصيات والفيديو",I("vst","","vsl"))}</div><button class="p" onclick="applyD()">📥 سحب الحوار من السكريبت (تبويب 1) وتوزيعه على المشاهد</button><p class="note">يُوزَّع كل سطرين على مشهد، وتُربط الأسماء بالشخصيات تلقائياً. يمكنك تعديل أي سطر يدوياً بعد ذلك، وكذلك الكاميرا والجو لكل مشهد.</p></div>
+${S.scenes.map((s,i)=>`<div class="card"><b>مشهد ${i+1}</b> <span class="note">${esc(s.place)}</span><div class="g">${I(`scenes.${i}.cam`,"🎥 الكاميرا: تلقائي","cl")}${I(`scenes.${i}.atm`,"🌤️ الجو: تلقائي","al")}</div><div class="g">${I(`scenes.${i}.sfx`,"🔊 مؤثرات/صوت محيط (اختياري)")}${SEL(`scenes.${i}.st`,["لم يُولّد","تم","يحتاج إعادة"])}</div>${nrIn(s,i)}${dbadge(s)}<button class="s" onclick="addRev(${i})">↔️ إضافة لقطة عكسية بعد هذا المشهد</button>${s.d.map((d,k)=>`<div class="row"><div style="width:35%">${`<select data-k="scenes.${i}.d.${k}.s">${S.chars.map((c,j)=>`<option value="${j}" ${d.s==j?"selected":""}>${esc(c.name||c.fn)}</option>`).join("")}</select>`}</div><div style="flex:1">${I(`scenes.${i}.d.${k}.t`,"نص الحوار")}</div><div style="width:22%">${I(`scenes.${i}.d.${k}.tn`,"النبرة","ltl")}</div></div>`).join("")}</div>`).join("")}
+<button class="p" onclick="autoD();gen('video')">توليد برومتات الفيديو</button><button class="s" onclick="chk()">✅ فحص قبل التوليد</button><button class="s" onclick="gPack()">حزمة مشروع Flow</button><div id="o_chk"></div>${OUTG("video")}${OUT("pack")}${step()}`
+];
+
+/* ---------- المولدات والدوال المساعدة ---------- */
+function gIdeas(){show("story",`Give EXACTLY 5 distinct ${en(GN,S.genre)} story ideas suited to ${cult()} for a ${S.dur}-minute dialogue-only 2D cartoon video. For each: a short title plus 1-2 sentences covering protagonist, conflict and moral/emotional payoff.`)}
+function gChars(){show("chars",S.chars.map(c=>`FILENAME: ${c.fn}\n2D cartoon character model sheet of ${c.name||"the character"}, ${desc(c)}. Full-body turnaround in a single image (front, 3/4 front, left profile, right profile, 3/4 back, back) evenly spaced at consistent scale, plus a row of facial expressions (happy, angry, sad, shocked, crying, worried), on a pure white background with neutral even lighting and no floor shadows. ${STYLE}`).join("\n\n"))}
+function gEnv(){show("env",places().map(p=>`${envFn(p)} — a wide establishing shot of ${en(PL,p)}, no characters, culturally accurate architecture, props and vegetation for ${cult()}, fixed recurring elements kept identical every time, ${S.scenes.find(s=>s.place==p).atm?en(ATM,S.scenes.find(s=>s.place==p).atm):"natural daylight"}. ${STYLE}`).join("\n\n"))}
+function gVoice(){show("voice",S.chars.map(vd).join("\n\n"))}
+function vidP(s,i,v=0){const B=S.path=="B",cs=sc(s);
+ const who=cs.map(c=>`${B?c.fn+": ":""}${c.name||tp(c)}, ${desc(c)}`).join("; ");
+ const dd=s.d.filter(d=>d.t&&S.chars[+d.s]);
+ const vo=[...new Set(dd.map(d=>+d.s))].map(j=>vd(S.chars[j])).join(" ");
+ const dia=dd.map(d=>{const c=S.chars[+d.s];return `${c.name||tp(c)} says${LT(d)} in ${dial()}, lip-synced: "${d.t}"`}).join(" Then ");
+ return `scene_${sw(i+1)}: ${stl().a}, ${B?envFn(s.place)+" — ":""}${en(PL,s.place)}. Characters: ${who||"none"}. ${sdir(cs)}${cs.length?ident(B):""}Action: ${s.act||"natural performance"}. ${motT(s)}${aniMot()}Camera movement: ${camT(s)}, smooth and cinematic. ${shotTxt(s)}${lensT(s)} Atmosphere and lighting: ${atmT(s)}. ${audioT(s)}${+mp().au?`Voices: ${vo||"none"} ${dia?"Dialogue: "+dia+".":""}`:"Silent clip with no spoken audio, no lip-sync needed."} ${narT(s)}Max ${mp().sec} seconds, no on-screen text or subtitles${hasNar()?"":", no narrator"}. ${S_()} Summary: ${bld(B,i)}, ${camT(s)}.${vx("video",v)}`+extras(s)}
+function gVideo(){show("video",S.scenes.map(vidP).join("\n\n"))}
+
+const VP={chars:["with a bright cheerful default expression","with a calm dignified posture","with a lively energetic stance","with softer gentler features","with a confident heroic bearing"],env:["with a different time-of-day tint","with richer foliage and props","from a different viewpoint of the same place","with more atmospheric depth","with cleaner open composition"],scenes:["with a fresh framing and composition","with more expressive poses and gestures","with richer background detail","with a different emotional emphasis","with dynamic natural movement"],voice:["with slightly warmer delivery","with more expressive pauses","with a softer, closer tone","with more energy and clarity","with a more mature resonance"],video:["with a fresh camera angle and composition","with more expressive acting and gestures","with richer background detail","with a different emotional emphasis","with dynamic natural motion"]};
+const vx=(g,v)=>typeof v=="number"&&v>0?` Variation: ${VP[g][(v-1)%5]}.`:"";
+
+const GR={
+ chars:{n:()=>S.chars.length,l:i=>S.chars[i].name||S.chars[i].fn,f:(i,v)=>{const c=S.chars[i];return `FILENAME: ${c.fn}\n${stl().a} character model sheet of ${c.name||"the character"}, ${desc(c)}. Full-body turnaround in a single image (front, 3/4 front, left profile, right profile, 3/4 back, back) evenly spaced at consistent scale, plus a row of facial expressions (happy, angry, sad, shocked, crying, worried), on a pure white background with neutral even lighting and no floor shadows. ${STYLE}`+vx("chars",v)}},
+ env:{n:()=>places().length,l:i=>envFn(places()[i]),f:(i,v)=>{const p=places()[i],s=S.scenes.find(x=>x.place==p);return `${envFn(p)} — a wide establishing shot of ${en(PL,p)}, no characters, culturally accurate architecture, props and vegetation for ${cult()}, fixed recurring elements kept identical every time (${PE[p]||"the same key landmarks and props"}), ${s.atm?en(ATM,s.atm):"natural daylight"}. ${STYLE}`+vx("env",v)}},
+ scenes:{n:()=>S.scenes.length,l:i=>`مشهد ${i+1} — scene_${sw(i+1)} (سمِّ الملف في Flow: مشهد ${i+1})`,f:(i,v)=>{const s=S.scenes[i];return `${sw(i+1)}: ${envFn(s.place)} (${en(PL,s.place)}); ${sc(s).map(c=>`${c.fn} (${desc(c)})`).join("; ")||"no characters"}; ${s.act||"a moment of the story"}; ${s.ty}; framing: ${camT(s)}; atmosphere: ${atmT(s)}. ${STYLE}`+vx("scenes",v)}},
+ voice:{n:()=>S.chars.length,l:i=>S.chars[i].name||S.chars[i].fn,f:(i,v)=>vd(S.chars[i])+vx("voice",v)},
+ video:{n:()=>S.scenes.length,l:i=>`مشهد ${i+1} — scene_${sw(i+1)} (سمِّ المقطع في Flow: مشهد ${i+1})`,f:(i,v)=>vidP(S.scenes[i],i,v)}};
+
+const drawG=g=>{const a=S.items[g].slice(0,GR[g].n());return `<div class="row"><button class="s" onclick="cpAll('${g}',this)">📋 نسخ الكل</button><button class="s" onclick="gen('${g}',1)">🔄 إعادة توليد الكل</button></div>`+a.map((t,i)=>`<div class="card"><b>${esc(GR[g].l(i))}</b><textarea class="out" style="min-height:110px" readonly onclick="this.select()">${esc(t)}</textarea><button class="s" onclick="cp(this)">📋 نسخ</button><button class="s" onclick="undoG('${g}',${i})" ${((S.hv||{})[g+i]||[]).length?"":"hidden"}>↩️ السابق</button><button class="p" onclick="regen('${g}',${i})">🔄 إعادة توليد</button></div>`).join("")+gck(g)};
+const OUTG=g=>`<div id="o_${g}">${S.items[g]?drawG(g):""}</div>`;
+function cpAll(g,b){try{navigator.clipboard.writeText(S.items[g].join("\n\n"))}catch(e){}b.textContent="✅ تم النسخ";setTimeout(()=>b.textContent="📋 نسخ الكل",1500)}
+const msg=t=>{$("#st").textContent=t;setTimeout(()=>$("#st").textContent="",3500)};
+function expP(){$("#pj").innerHTML=`<div class="card"><textarea readonly onclick="this.select()">${esc(JSON.stringify(S))}</textarea><button class="s" onclick="cp(this)">📋 نسخ</button><p class="note">احفظ هذا النص في ملاحظاتك لاستيراده لاحقاً.</p></div>`}
+function impP(){$("#pj").innerHTML=`<div class="card"><textarea id="imp" placeholder="ألصق نص المشروع هنا"></textarea><button class="p" onclick="try{Object.assign(S,JSON.parse($('#imp').value));$('#pj').innerHTML='';render();msg('✅ تم الاستيراد')}catch(e){msg('النص غير صالح')}">استيراد</button></div>`}
+function applyD(){const n=distD();if(n){render();msg("✅ تم توزيع "+n+" سطر على "+S.scenes.length+" مشهد")}}
+
+document.addEventListener("focusin",e=>{const t=e.target;if(!t.matches||!t.matches("input[list]"))return;t.dataset.old=t.value;t.dataset.ph=t.placeholder;t.dataset.touched="";if(t.value){t.placeholder=t.value;t.value=""}});
+document.addEventListener("input",e=>{const t=e.target;if(t.dataset&&t.dataset.old!==undefined)t.dataset.touched="1"});
+document.addEventListener("focusout",e=>{const t=e.target;if(!t.matches||!t.matches("input[list]"))return;if(t.value===""&&!t.dataset.touched&&t.dataset.old)t.value=t.dataset.old;t.placeholder=t.dataset.ph||""});
+
+function extractChars(){const L=parseScript();const names=[...new Set(L.map(x=>x.n).filter(n=>!isNar(n)))].slice(0,10);if(!names.length)return msg("لا يوجد حوار صالح في السكريبت (تبويب 1)");
+ const old=S.chars,used=new Set();
+ const nw=names.map((n,i)=>{let e=old.find(c=>!used.has(c)&&c.name.trim().toLowerCase()==n.toLowerCase())||old.find(c=>!used.has(c)&&!c.name);if(e){used.add(e);e.name=n;return e}const c=mkC(i);c.name=n;return c});
+ nw.forEach((c,i)=>{if(/^character_/.test(c.fn))c.fn="character_"+sw(i+1)});
+ S.scenes.forEach(s=>{s.cs=s.cs.map(j=>nw.indexOf(old[+j])).filter(j=>j>=0).map(String);s.d.forEach(d=>{const k=nw.indexOf(old[+d.s]);d.s=String(k<0?0:k)})});
+ S.chars=nw;render();msg("✅ تم سحب "+nw.length+" شخصية، عدّل النوع والسن والملامح")}
+
+function importCJ(){try{const t=(S.cjson||"").replace(/```json|```/g,"");const a=JSON.parse(t.slice(t.indexOf("["),t.lastIndexOf("]")+1));a.forEach(o=>{if(!o.name)return;const q=String(o.name).trim().toLowerCase();let c=S.chars.find(x=>x.name.trim().toLowerCase()==q)||S.chars.find(x=>!x.name);if(!c){if(S.chars.length>=10)return;c=mkC(S.chars.length);S.chars.push(c)}c.name=o.name;if(o.type)c.type=o.type;if(o.age)c.age=String(o.age);if(o.trait)c.trait=o.trait;if(o.look)c.look=o.look});render();msg("✅ تم استيراد تفاصيل "+a.length+" شخصية")}catch(e){msg("تعذّر قراءة النص، تأكد أنه JSON صحيح")}}
+
+let rt;function resetAll(b){if(!b.dataset.arm){b.dataset.arm="1";b.textContent="⚠️ اضغط مرة أخرى للتأكيد";rt=setTimeout(()=>{b.dataset.arm="";b.textContent="🗑️ بدء من جديد"},3000);return}
+ clearTimeout(rt);b.dataset.arm="";b.textContent="🗑️ بدء من جديد";
+ Object.keys(S).forEach(k=>delete S[k]);
+ Object.assign(S,{tab:0,lang:"العربية",mode:"gen",genre:"أخلاقية",dur:"3",idea:"",own:"",script:"",chars:[mkC(0),mkC(1)],scenes:[mkS(),mkS(),mkS()],path:"B",proj:"my_flow_story",gc:"",ga:"",out:{},ar:"16:9",items:{},vr:{},vst:"2D كرتون"});
+ $("#pj").innerHTML="";render();scrollTo(0,0);msg("✅ تم مسح كل البيانات")}
+
+const VST={"2D كرتون":{a:"2D cartoon animation",f:"2D cartoon animated film",l:"semi-realistic stylized cartoon look, clean bold outlines, smooth cel-style shading",x:"3D render, photorealistic photo, anime, chibi, stick figures"},
+"3D أنيميشن":{a:"3D CGI animation",f:"3D CGI animated film",l:"stylized Pixar-like 3D animated-feature look, soft subsurface skin shading, expressive appealing characters, rich textures",x:"2D flat drawing, photorealistic live-action, stick figures"},
+"واقعي (Realistic)":{a:"photorealistic live-action cinematic footage",f:"photorealistic live-action cinematic film",l:"photorealistic cinematic look, natural skin texture, real-world lighting, shot on a cinema camera",x:"cartoon, illustration, 3D render, anime, plastic skin"},
+"أنمي":{a:"anime animation",f:"anime film",l:"Japanese anime look, clean line art, cel shading, vivid colors, expressive eyes",x:"3D render, photorealistic photo, western cartoon"},
+"صلصال Claymation":{a:"stop-motion claymation",f:"stop-motion claymation film",l:"handmade clay figures with visible fingerprints and tactile textures, miniature set look",x:"smooth CGI, photorealistic photo, flat drawing"},
+"ألوان مائية":{a:"watercolor storybook animation",f:"watercolor storybook animated film",l:"hand-painted watercolor look, soft washes, gentle ink outlines, paper texture",x:"3D render, photorealistic photo, harsh digital gradients"}};
+const stl=()=>VST[S.vst]||(S.vst?{a:S.vst+" style",f:S.vst+" style film",l:S.vst+" look",x:"inconsistent style"}:VST["2D كرتون"]);
+
+const LS=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||"{}");localStorage.setItem(k,JSON.stringify(v))}catch(e){return v===undefined?{}:null}};
+function refreshPS(){const p=LS("flow_projects"),t=LS("flow_tpls");$("#ps").innerHTML="<option value=''>— اختر مشروعاً أو قالباً محفوظاً —</option>"+Object.keys(p).map(n=>`<option value="p:${esc(n)}">📁 ${esc(n)}</option>`).join("")+Object.keys(t).map(n=>`<option value="t:${esc(n)}">📑 قالب: ${esc(n)}</option>`).join("")}
+function saveP(){const n=($("#pn").value||S.proj||"مشروع").trim(),p=LS("flow_projects");p[n]=JSON.parse(JSON.stringify(S));if(LS("flow_projects",p)===null)return msg("تعذّر الحفظ هنا، استخدم تصدير كنص");refreshPS();msg("✅ حُفظ: "+n)}
+function saveT(){const n=($("#pn").value||"قالب").trim(),t=LS("flow_tpls"),{vst,ar,lang,genre,dur,path,chars,gc,ga}=S;t[n]=JSON.parse(JSON.stringify({vst,ar,lang,genre,dur,path,chars,gc,ga}));if(LS("flow_tpls",t)===null)return msg("تعذّر الحفظ هنا");refreshPS();msg("✅ حُفظ كقالب: "+n)}
+function loadP(){const v=$("#ps").value;if(!v)return msg("اختر مشروعاً أو قالباً من القائمة");const n=v.slice(2);if(v[0]=="p"){const o=LS("flow_projects")[n];if(!o)return;Object.keys(S).forEach(k=>delete S[k]);Object.assign(S,JSON.parse(JSON.stringify(o)));$("#pn").value=n}else{const o=LS("flow_tpls")[n];if(!o)return;Object.assign(S,JSON.parse(JSON.stringify(o)));S.scenes.forEach(s=>{s.cs=[];s.d.forEach(d=>d.s="0")});S.out={};S.items={};S.vr={}}render();msg("✅ تم التحميل: "+n)}
+function delP(){const v=$("#ps").value;if(!v)return msg("اختر العنصر المراد حذفه");const k=v[0]=="p"?"flow_projects":"flow_tpls",o=LS(k);delete o[v.slice(2)];LS(k,o);refreshPS();msg("تم الحذف")}
+function libSel(){const l=LS("flow_lib");return `<select onchange="libAdd(this.value);this.value=''"><option value="">— اختر —</option>${Object.keys(l).map(n=>`<option>${esc(n)}</option>`).join("")}</select>`}
+function libSave(i){const c=S.chars[i],l=LS("flow_lib");l[c.name||c.fn]=JSON.parse(JSON.stringify(c));LS("flow_lib",l);msg("📚 حُفظت الشخصية في المكتبة")}
+function libAdd(n){if(!n)return;if(S.chars.length>=10)return msg("الحد الأقصى 10 شخصيات");const c=JSON.parse(JSON.stringify(LS("flow_lib")[n]));c.fn="character_"+sw(S.chars.length+1);S.chars.push(c);render()}
+function undoG(g,i){const h=(S.hv||{})[g+i];if(!h||!h.length)return;S.items[g][i]=h.pop();$("#o_"+g).innerHTML=drawG(g)}
+const est=s=>{const w=s.d.reduce((a,d)=>a+(d.t?d.t.trim().split(/\s+/).length:0),0)+String(s.nr||"").trim().split(/\s+/).filter(Boolean).length;return w?w/2.5+1:0};
+const dbadge=s=>{const t=est(s);return `<div class="note" style="color:${t>mp().sec?"#ff6b6b":"inherit"}">⏱️ مدة الحوار التقديرية: ~${t.toFixed(1)} ث ${t>mp().sec?"— أطول من "+mp().sec+" ثوانٍ، قسّمه على مشهدين":""}</div>`};
+
+const GP={"عائلية":[["المنزل (الصالة)","الحديقة","المطبخ","غرفة النوم"],["إضاءة داخلية دافئة","ضوء نهار","غروب ذهبي"]],"اجتماعية":[["الشارع","السوق","المنزل (الصالة)"],["ضوء نهار","غيوم","غروب ذهبي"]],"أخلاقية":[["القرية","المدرسة","الحديقة"],["ضوء نهار","شروق","غروب ذهبي"]],"حرب وبطولة":[["الصحراء","الجبل","القرية"],["غيوم","ظلال درامية","عاصفة رملية"]],"قرية وريف":[["القرية","المزرعة","السوق"],["شروق","ضوء نهار","غروب ذهبي"]],"حيوانات":[["الغابة","المزرعة","الجبل"],["شروق","ضوء نهار","ضباب"]],"سحرية":[["الغابة","الجبل","الصحراء"],["ليل بقمر","ضباب","غروب ذهبي"]],"تعليمية للأطفال":[["الفصل الدراسي","المدرسة","الحديقة"],["ضوء نهار","رياح خفيفة","أجواء احتفال"]],"مغامرات":[["الغابة","الجبل","الشاطئ"],["شروق","ضوء نهار","غيوم"]],"كوميدية":[["الشارع","السوق","المنزل (الصالة)"],["ضوء نهار","أجواء احتفال","رياح خفيفة"]]};
+const KW=[[/مدرس|معلم|حصة/,"المدرسة"],[/فصل|سبور/,"الفصل الدراسي"],[/بيت|منزل|عشاء/,"المنزل (الصالة)"],[/حديقة|أرجوح/,"الحديقة"],[/سوق|بائع|دكان|تاجر/,"السوق"],[/مزرع|حقل|قمح|بقر/,"المزرعة"],[/بحر|شاطئ|موج/,"الشاطئ"],[/صحراء|رمل|خيمة/,"الصحراء"],[/غابة|شجر/,"الغابة"],[/جبل|قمة/,"الجبل"],[/مسجد|صلاة|أذان/,"المسجد"],[/مستشفى|طبيب|دواء/,"المستشفى"],[/ملعب|كرة|مباراة/,"الملعب"],[/مطبخ|طبخ|طعام/,"المطبخ"]];
+function autoS(){const g=GP[S.genre]||GP["عائلية"],n=S.scenes.length,cl=["تقريب تدريجي","لقطة قريبة للوجه","بانوراما","فوق الكتف","تتبع الشخصية"],cx=Math.round(n*0.75);
+ S.scenes.forEach((s,i)=>{const tx=s.d.map(d=>d.t).join(" ")+" "+s.act,k=KW.find(x=>x[0].test(tx));
+  if(k)s.place=k[1];else if(s.place=="الحديقة"&&!s.act)s.place=g[0][Math.floor(i*g[0].length/n)];
+  if(!s.atm)s.atm=i==0?g[1][0]:i==n-1?g[1][2]:(i==cx&&n>3?"ظلال درامية":g[1][1]);
+  if(!s.cam)s.cam=i==0?"لقطة واسعة":i==cx?"لقطة قريبة للوجه":cl[i%cl.length];
+  if(s.ty=="مشهد حواري")s.ty=i==0?"افتتاحي":i==n-1?"ختام":i==cx?"ذروة":s.ty});
+ render();msg("✅ تم الاقتراح، راجعه وعدّله")}
+
+const MD={"Google Flow (Veo)":{sec:8,au:1,neg:0,ars:"16:9,9:16",tip:"استخدم Frames to Video وأضف صور الشخصيات والمكان كمكونات؛ الحوار يُكتب داخل البرومت."},
+"Kling":{sec:10,au:1,neg:1,ars:"16:9,9:16,1:1",tip:"ارفع الصورة كإطار بداية، وألصق سطر NEGATIVE PROMPT في الحقل السالب المنفصل."},
+"Runway":{sec:10,au:0,neg:0,ars:"16:9,9:16,1:1,4:3,21:9",tip:"يعمل غالباً من صورة بداية (المسار A)؛ ركّز على الحركة، والحوار يُضاف بأداة دبلجة."},
+"Sora":{sec:10,au:1,neg:0,ars:"16:9,9:16",tip:"يدعم الصوت والحوار داخل البرومت؛ أبقِ كل مشهد قصيراً ومحدد الحركة."},
+"Luma":{sec:5,au:0,neg:0,ars:"16:9,9:16,1:1,4:3,3:4,21:9",tip:"ركّز على وصف الحركة والكاميرا؛ الحوار يُضاف لاحقاً بأداة دبلجة."},
+"Hailuo (MiniMax)":{sec:6,au:0,neg:0,ars:"16:9,9:16,1:1",tip:"برومتات واضحة قصيرة؛ الحوار يُضاف لاحقاً."},
+"Pika":{sec:5,au:0,neg:1,ars:"16:9,9:16,1:1,4:5,4:3",tip:"استخدم حقل Negative المنفصل؛ مقاطع قصيرة."},
+"Seedance":{sec:10,au:1,neg:0,ars:"16:9,9:16,1:1,4:3,21:9",tip:"يدعم الصوت؛ حدّد الحركة والكاميرا بوضوح."},
+"موديل آخر":{sec:8,au:1,neg:0,ars:"16:9,9:16",tip:"عدّل الحدود يدوياً حسب الموديل."}};
+const mp=()=>S.mp||MD[S.model]||MD["Google Flow (Veo)"];
+function setModel(v){S.model=v;S.mp={...MD[v]};render()}
+const S_=()=>{const t=String(STYLE);return +mp().neg?t.split(" Avoid: ")[0]:t};
+const extras=s=>{let x="";if(!+mp().au){const dd=s.d.filter(d=>d.t&&S.chars[+d.s]);if(dd.length)x+="\n\n[DUB SCRIPT for a voice/lip-sync tool] "+dd.map(d=>`${S.chars[+d.s].name||tp(S.chars[+d.s])}: \"${d.t}\"`).join(" | ")}if(+mp().neg)x+="\n\nNEGATIVE PROMPT: "+(String(STYLE).split(" Avoid: ")[1]||"");if(hasNar()&&!+mp().au&&s.nr)x+="\n\n[VOICE-OVER for dubbing, synced to this scene ("+narDesc()+")] "+s.nr;return x};
+
+const CAMV={"ثابتة":["static locked-off camera","tripod-steady fixed frame with no camera movement","perfectly still observational camera"],"تقريب تدريجي":["slow cinematic push-in toward the subject","gentle dolly-in that gradually tightens the frame","smooth slow zoom-in building emotional intensity"],"ابتعاد":["slow pull-back revealing the surroundings","smooth dolly-out widening the frame","gradual zoom-out revealing the full scene"],"بانوراما":["smooth horizontal pan following the action","slow sweeping pan across the scene","gentle left-to-right pan revealing the location"],"إمالة":["slow upward tilt revealing the scene","smooth vertical tilt from ground to sky","gentle downward tilt onto the subject"],"تتبع الشخصية":["tracking shot following the character at walking pace","side-tracking shot keeping the character centered","smooth follow camera behind the character"],"لقطة مرتفعة":["high-angle shot looking down on the subject","elevated angle emphasizing vulnerability","crane-like high angle slowly drifting"],"لقطة منخفضة":["low-angle shot looking up at the subject","ground-level low angle conveying strength","heroic low angle with slight upward tilt"],"فوق الكتف":["over-the-shoulder shot from behind one character","over-the-shoulder framing with soft-focus foreground shoulder","conversation over-the-shoulder shot with shallow depth of field"],"لقطة قريبة للوجه":["close-up on the face capturing emotion","tight facial close-up with shallow depth of field","intimate close-up with subtle push-in"],"لقطة واسعة":["wide establishing shot of the whole location","expansive wide shot showing characters within the environment","slow wide shot with deep composition"],"كاميرا محمولة":["gentle handheld camera with natural subtle sway","documentary-style handheld movement","light handheld camera adding realism"],"دوران حول الشخصية":["slow orbit around the character","smooth 180-degree arc shot around the subject","circular dolly move revolving around the character"]};
+const ATMV={"ضوء نهار":["bright sunny daylight","clear midday sunlight with soft shadows","warm natural daylight under a blue sky"],"شروق":["soft sunrise light","early-morning glow with long gentle shadows","pink-golden dawn light over the scene"],"غروب ذهبي":["golden-hour sunset","warm orange sunset light with long shadows","glowing late-afternoon golden light"],"ليل بقمر":["moonlit night","cool blue moonlight with deep soft shadows","quiet night lit by a full moon and warm lamps"],"مطر":["light rain with wet reflections","steady rainfall with misty air and glistening surfaces","gentle drizzle with gray soft light"],"غيوم":["heavy overcast clouds","gray cloudy sky with flat diffused light","moody cloud cover with muted colors"],"ضباب":["misty fog","thick morning fog softening the distance","dreamy haze with low visibility and soft light"],"عاصفة رملية":["sandstorm haze","wind-blown sand with an orange dusty sky","swirling desert dust reducing visibility"],"ثلج":["falling snow","soft snowfall over a white landscape","gentle snowflakes drifting in cold blue light"],"رياح خفيفة":["gentle breeze","soft wind moving clothes, leaves and hair","light airy breeze with swaying trees"],"إضاءة داخلية دافئة":["warm indoor lighting","cozy warm lamp light with soft shadows","golden interior glow from lamps and windows"],"ظلال درامية":["dramatic shadows","high-contrast side lighting with deep shadows","moody chiaroscuro lighting"],"أجواء احتفال":["festive celebratory ambience","colorful decorations with joyful bright lighting","lively celebration with warm lights and confetti"]};
+const CAMC={"ثابتة":"c-st","تقريب تدريجي":"c-push","ابتعاد":"c-pull","بانوراما":"c-pan","إمالة":"c-tilt","تتبع الشخصية":"c-track","لقطة مرتفعة":"c-high","لقطة منخفضة":"c-low","فوق الكتف":"c-ots","لقطة قريبة للوجه":"c-close","لقطة واسعة":"c-wide","كاميرا محمولة":"c-hand","دوران حول الشخصية":"c-orbit"};
+const ATMC={"ضوء نهار":"a-day","شروق":"a-sunrise","غروب ذهبي":"a-golden","ليل بقمر":"a-night","مطر":"a-rain","غيوم":"a-cloud","ضباب":"a-fog","عاصفة رملية":"a-sand","ثلج":"a-snow","رياح خفيفة":"a-breeze","إضاءة داخلية دافئة":"a-indoor","ظلال درامية":"a-drama","أجواء احتفال":"a-fest"};
+
+/* صور واقعية عالية الدقة لكل حركة كاميرا ولكل جو عام (تعديل 1 و 2: واضحة بدون نصوص بداخلها) */
+const CAM_IMG = {
+  "ثابتة": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=500&q=80&auto=format&fit=crop",
+  "تقريب تدريجي": "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=500&q=80&auto=format&fit=crop",
+  "ابتعاد": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=500&q=80&auto=format&fit=crop",
+  "بانوراما": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=500&q=80&auto=format&fit=crop",
+  "إمالة": "https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?w=500&q=80&auto=format&fit=crop",
+  "تتبع الشخصية": "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=500&q=80&auto=format&fit=crop",
+  "لقطة مرتفعة": "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=500&q=80&auto=format&fit=crop",
+  "لقطة منخفضة": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=500&q=80&auto=format&fit=crop",
+  "فوق الكتف": "https://images.unsplash.com/photo-1516575334481-f85287c2c82d?w=500&q=80&auto=format&fit=crop",
+  "لقطة قريبة للوجه": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&q=80&auto=format&fit=crop",
+  "لقطة واسعة": "https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=500&q=80&auto=format&fit=crop",
+  "كاميرا محمولة": "https://images.unsplash.com/photo-1533105079780-92b9be482077?w=500&q=80&auto=format&fit=crop",
+  "دوران حول الشخصية": "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=500&q=80&auto=format&fit=crop",
+  "Steadicam تتبع": "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=500&q=80&auto=format&fit=crop",
+  "FPV درون": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80&auto=format&fit=crop",
+  "رافعة (Crane) صاعدة": "https://images.unsplash.com/photo-1514565131-fce0801e5785?w=500&q=80&auto=format&fit=crop",
+  "Whip pan سريع": "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=500&q=80&auto=format&fit=crop",
+  "زاوية هولندية مائلة": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=500&q=80&auto=format&fit=crop"
+};
+
+const ATM_IMG = {
+  "ضوء نهار": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=500&q=80&auto=format&fit=crop",
+  "شروق": "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=500&q=80&auto=format&fit=crop",
+  "غروب ذهبي": "https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=500&q=80&auto=format&fit=crop",
+  "ليل بقمر": "https://images.unsplash.com/photo-1532978379173-523e16f371f2?w=500&q=80&auto=format&fit=crop",
+  "مطر": "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?w=500&q=80&auto=format&fit=crop",
+  "غيوم": "https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=500&q=80&auto=format&fit=crop",
+  "ضباب": "https://images.unsplash.com/photo-1487621167305-5d248087c724?w=500&q=80&auto=format&fit=crop",
+  "عاصفة رملية": "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=500&q=80&auto=format&fit=crop",
+  "ثلج": "https://images.unsplash.com/photo-1491002052546-bf38f186af56?w=500&q=80&auto=format&fit=crop",
+  "رياح خفيفة": "https://images.unsplash.com/photo-1500534623283-312aade485b7?w=500&q=80&auto=format&fit=crop",
+  "إضاءة داخلية دافئة": "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=500&q=80&auto=format&fit=crop",
+  "ظلال درامية": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=500&q=80&auto=format&fit=crop",
+  "أجواء احتفال": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500&q=80&auto=format&fit=crop",
+  "إضاءة رامبرانت": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&q=80&auto=format&fit=crop",
+  "أشعة ضوء حجمية (God rays)": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&q=80&auto=format&fit=crop",
+  "كياروسكورو (تباين حاد)": "https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?w=500&q=80&auto=format&fit=crop"
+};
+
+const tile=(k,n)=>{
+  const cls = k=="cam"?(CAMC[n]||""):(ATMC[n]||"");
+  const imgUrl = (k=="cam"?CAM_IMG[n]:ATM_IMG[n]) || "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=500&q=80&auto=format&fit=crop";
+  return `<div class="pv"><div class="sc ${cls}" style="position:absolute;inset:0"><img class="pv-img" src="${imgUrl}" alt="${esc(n||"")}" loading="lazy"><div class="fx"></div></div></div>`;
+};
+
+const phr=(s,k)=>k=="cam"?((CAMV[s.cam]||[])[+s.cv||0]||""):((ATMV[s.atm]||[])[+s.av||0]||"");
+function updPv(i){const s=S.scenes[i];if(!s)return;["cam","atm"].forEach(k=>{const p=$("#pv_"+k+"_"+i),t=$("#ph_"+k+"_"+i);if(p)p.innerHTML=tile(k,s[k]);if(t)t.textContent=phr(s,k)})}
+document.addEventListener("input",e=>{const m=(e.target.dataset.k||"").match(/^scenes\.(\d+)\.(cam|atm|cv|av)$/);if(m)updPv(+m[1])});
+const gal=(k,M)=>`<div class="gal">${Object.keys(M).map(n=>`<div class="tl" onclick="info('${k}','${n}')">${tile(k,n)}<div class="note">${n}</div></div>`).join("")}</div><div id="inf_${k}"></div>`;
+function info(k,n){const VV=k=="cam"?CAMV:ATMV;$("#inf_"+k).innerHTML=`<div class="card"><b>${n}</b><div style="max-width:260px">${tile(k,n)}</div><div class="note">ثلاث طرق إنجليزية لوصف نفس الشيء (الفرق بينها بسيط)، اختر واحدة لتطبّقها على كل المشاهد، وإن لم تعجبك النتيجة جرّب الأخرى:</div>${VV[n].map((t,j)=>`<div class="note"><b>${j+1}.</b> ${t} <button class="s" onclick="applyAll('${k}','${n}',${j})">تطبيق على كل المشاهد</button></div>`).join("")}</div>`}
+function applyAll(k,n,j){S.scenes.forEach(s=>{if(k=="cam"){s.cam=n;s.cv=j}else{s.atm=n;s.av=j}});render();msg("✅ تم التطبيق على كل المشاهد")}
+
+V[4]=()=>`<div class="card"><h3>حركات الكاميرا</h3><p class="note">كل مربع يعرض الحركة متحركة على صورة واقعية. اضغط عليه لترى الصياغات الاحترافية الثلاث، ثم طبّقها على كل المشاهد أو اختر لكل مشهد.</p>${gal("cam",CAMV)}</div>`;
+V[5]=()=>`<div class="card"><h3>الجو العام والإضاءة</h3><p class="note">كل مربع يعرض الجو والإضاءة بصورة واقعية واضحة. اضغط عليه لترى الصياغات الثلاث ثم طبّقها.</p>${gal("atm",ATMV)}</div>`;
+
+function gRev(){if(!S.script.trim())return msg("الصق السكريبت أولاً");show("story",`Review the dialogue-only script below. Check: (1) does it clearly teach ${S.goal||"a clear moral"}; (2) is it suitable for ${S.age||"children"} in vocabulary, violence and scary content; (3) does each beat fit within ${mp().sec} seconds of speech (about ${Math.floor((+mp().sec||8)*2.5)} words max); (4) are character names consistent. Return a short list of issues, then a corrected script in the same format.\n\nScript:\n${S.script}`)}
+function gPack(){const pn=S.proj||"my_flow_story",m=mp();show("pack",`TARGET MODEL: ${S.model}\nTIP: ${m.tip||""}\nMAX CLIP: ${m.sec}s | AUDIO/DIALOGUE: ${+m.au?"native in prompt":"silent clips, use DUB SCRIPT"}\n\nPROJECT NAME: ${pn}\n\nINGREDIENTS (generate/upload):\n${S.chars.map(c=>"- character sheet image: "+c.fn).join("\n")}\n${places().map(p=>"- environment image: "+envFn(p)).join("\n")}\n\nSCENE PROMPTS (paste one by one, in order):\n\n${S.scenes.map((s,i)=>vidP(s,i,S.vr["video"+i]||0)).join("\n\n")}\n\nMASTER PROMPT:\nA ${S.dur}-minute ${en(GN,S.genre)} ${stl().f} in ${dial()} with ${S.chars.length} characters (${S.chars.map(c=>c.name||c.fn).join(", ")}) across ${places().length} locations and ${S.scenes.length} scenes, culturally accurate (${cult()}), dialogue-driven with no narrator${S.goal?", teaching: "+S.goal:""}, consistent character designs and voices throughout. ${STYLE}\n\nخطوات التجميع:\n1) أنشئ مشروعاً جديداً باسم ${pn}.\n2) أضف صور الشخصيات والأماكن كمكونات.\n3) ولّد كل مشهد بالترتيب.\n4) رتّب المقاطع ثم صدّر الفيديو.`)}
+
+const TPL=[{n:"🤝 الصدق",g:"أخلاقية",m:1,i:"طفل يكسر شيئاً ثميناً في البيت ويتردد بين الكذب والاعتراف، ثم يختار الصدق فيكسب ثقة أهله"},{n:"🧓 احترام الكبار",g:"أخلاقية",m:1,i:"طالب يتعلم من جده قيمة الاحترام والصبر بعد موقف صعب مع جار كبير في السن"},{n:"🚫 لا للتنمر",g:"اجتماعية",m:1.5,i:"طالبة جديدة تتعرض للسخرية في المدرسة، فيقف زملاؤها معها ويتعلم الجميع أن الكلمة الطيبة قوة"},{n:"💧 درس علمي: دورة الماء",g:"تعليمية للأطفال",m:1,i:"قطرة ماء صغيرة تتكلم وتحكي لطفلين رحلتها من البحر إلى السحاب ثم المطر بحوار ممتع"},{n:"🌱 النظافة والبيئة",g:"تعليمية للأطفال",m:1,i:"مجموعة طلاب ينظفون حديقة الحي ويكتشفون أن الحفاظ على البيئة مسؤولية الجميع"},{n:"🚦 السلامة المرورية",g:"تعليمية للأطفال",m:1,i:"أخ وأخته في طريقهما إلى المدرسة يتعلمان قواعد عبور الشارع بأمان من شرطي المرور"},{n:"🎉 مناسبة وطنية",g:"اجتماعية",m:1.5,i:"عائلة تستعد للاحتفال باليوم الوطني، ويتعلم الأطفال من الجد قصص الأجداد وحب الوطن والانتماء"},{n:"🌙 رمضان والعطاء",g:"عائلية",m:1,i:"أطفال يجمعون مصروفهم في رمضان لمساعدة جار محتاج، ويتعلمون فرحة العطاء"},{n:"📚 حب القراءة",g:"تعليمية للأطفال",m:1,i:"ولد يملّ من الكتب حتى تأخذه أمينة مكتبة المدرسة في رحلة خيالية داخل قصة"}];
+const MUSIC={"هادئة دافئة":"calm, warm and gentle","فرح ومرح":"cheerful, playful and bouncy","تشويق":"suspenseful, tense and slowly building","حزن مؤثر":"sad, tender and emotional","بطولية":"heroic, uplifting and triumphant","غموض":"mysterious and curious","احتفالية":"festive, joyful and celebratory","بدون آلات (أصوات وإيقاع)":"VOCAL","بدون موسيقى":"NONE"};
+const INSTR={"العربية":"oud, qanun, ney flute and soft frame drums","Hindi":"sitar, bansuri flute and tabla","Urdu":"harmonium, rubab and tabla","English":"piano, light strings and acoustic guitar","Bengali":"ektara, dotara, bansuri flute and tabla"};
+const SFX={"خطوات":"footsteps","باب يُفتح":"a door opening","طرق على الباب":"knocking on a door","جرس المدرسة":"a school bell ringing","مطر":"rain falling","رعد":"distant thunder","رياح":"wind blowing","طيور":"birds chirping","ضحك أطفال":"children laughing","سيارات":"cars passing by","أمواج":"waves crashing","تصفيق":"applause","هاتف يرن":"a phone ringing","ماء يجري":"running water","صفارة":"a whistle"};
+const PLACE_SFX={"الحديقة":"birds chirping and leaves rustling","المنزل (الصالة)":"a quiet home room tone with a softly ticking clock","غرفة النوم":"a quiet bedroom room tone","المطبخ":"a sizzling pan and clinking dishes","المدرسة":"distant children chatter in the schoolyard","الفصل الدراسي":"a quiet classroom with pencils and chairs moving","الشارع":"passing cars and distant footsteps","السوق":"busy market chatter and vendors calling","القرية":"roosters, goats and a light breeze","المزرعة":"farm animals and wind through the palm trees","الشاطئ":"gentle waves and seagulls","الصحراء":"wind sweeping over the dunes","الغابة":"birdsong and a trickling stream","الجبل":"mountain wind with a soft echo","المسجد":"soft footsteps on carpet in a calm reverberant hall","المستشفى":"a softly beeping medical monitor","الملعب":"children playing and a bouncing ball"};
+const LTONES={"عادي":"","همس":"whispering","غضب":"angrily","ضحك":"laughing","بكاء":"crying softly","صراخ":"shouting","دهشة":"in surprise","حزن":"sadly","فرح":"happily","خوف":"fearfully","تردد":"hesitantly","حنان":"tenderly","حماس":"excitedly"};
+const PALETTES={"طبيعية":"a rich natural balanced color palette","دافئة":"a warm color palette of ambers, oranges and soft reds","باردة":"a cool color palette of blues, teals and soft greens","ذهبية":"a golden honey-toned color palette","زاهية":"a bright saturated cheerful color palette","باستيل":"a soft pastel color palette","سينمائية":"a cinematic teal-and-orange color grade","صحراوية":"an earthy desert palette of sand, terracotta and olive","ليلية":"a moody blue night palette"};
+const ACTS={"بداية":1,"عقدة":1,"حل":1};
+const PE={"الحديقة":"the same trees, flower beds, a stone pathway and a wooden bench","المنزل (الصالة)":"the same floor cushions or sofa, patterned carpet, a low wooden table and a window with curtains","غرفة النوم":"the same bed with a patterned blanket, wardrobe, bedside lamp and window curtains","المطبخ":"the same counters, stove, hanging utensils, spice jars and a small dining table","المدرسة":"the same school building facade, flag pole, benches and shade trees","الفصل الدراسي":"the same rows of desks, a whiteboard, the teacher desk, posters without readable text and windows","الشارع":"the same houses, shop fronts, street lamps and parked cars","السوق":"the same market stalls, colorful fabrics, spice sacks and hanging lanterns","القرية":"the same small traditional houses, narrow lanes, a water well and trees","المزرعة":"the same fields, palm or fruit trees, an animal pen and an irrigation channel","الشاطئ":"the same shoreline, sand dunes, a wooden pier and a few rocks","الصحراء":"the same dunes, a lone tent, a few dry shrubs and a distant ridge","الغابة":"the same tall trees, a winding trail, a small stream and mossy rocks","الجبل":"the same rocky slopes, a narrow path and a distant peak","المسجد":"the same arched entrance, minaret, courtyard and carpeted hall","المستشفى":"the same reception desk, corridor, beds and medical equipment","الملعب":"the same field markings, goalposts, benches and surrounding fence"};
+const TG=[[/^(جدة|جدتي|حبوبة|عجوز)$/,"عجوز"],[/^(جد|جدي|شيخ)$/,"شيخ كبير"],[/^(أم|ام|أمي|امي|ماما|والدة|خالة|عمة|معلمة|أستاذة|استاذة|مديرة|طبيبة|ممرضة|أمينة|امينة)$/,"امرأة"],[/^(أب|اب|أبي|ابي|بابا|والد|عم|خال|معلم|أستاذ|استاذ|مدير|طبيب|شرطي|بائع|راعي|تاجر)$/,"رجل"],[/^(بنت|فتاة|طفلة|فاطمة|مريم|سارة|نور|ليلى|هند|لينا|رهف|ريم|شهد|أمل|عائشة|زينب|خديجة|حصة|نوف|دانة)$/,"بنت"],[/^(ولد|طفل|صبي|أحمد|احمد|محمد|علي|عمر|يوسف|خالد|سالم|فهد|ناصر|إبراهيم|ابراهيم|حمد|عبدالله|سعود|ياسين|زياد)$/,"ولد"]];
+const guessType=n=>{const w=String(n||"").trim().split(/\s+/)[0].replace(/^ال/,"");for(const [r,t] of TG)if(r.test(w))return t;return ""};
+function guessAll(){S.chars.forEach(c=>{if(c.name&&!c.look&&!c.lock&&c.type=="ولد"){const g=guessType(c.name);if(g){c.type=g;if(c.age=="8")c.age={boy:"9",girl:"9",man:"35",woman:"33",oldm:"70",oldf:"68"}[TK[g]]||"8"}}});render()}
+const musicKey=s=>(s.mu||"").trim()||"بدون موسيقى";
+const musicEn=k=>{const v=MUSIC[k];if(v=="VOCAL")return "a cappella background of soft wordless vocal humming and light hand percussion only, with no melodic instruments";return (v||k)+(BPM[k]?", about "+BPM[k]+" BPM":"")+" instrumental background music featuring "+(INSTR[S.lang]||"traditional instruments of the "+dial()+"-speaking culture")};
+const sfxT=s=>{const own=String(s.sfx||"").split(/[،,]+/).map(x=>x.trim()).filter(Boolean).map(x=>SFX[x]||x),base=PLACE_SFX[s.place]||"natural ambient sounds of the location";return own.length?own.join(", ")+" over "+base:base};
+const audioT=s=>+mp().au?"Sound design: "+sfxT(s)+". "+(MUSIC[musicKey(s)]=="NONE"?"No background music. ":"Background music: "+musicEn(musicKey(s))+", soft so dialogue stays clear. "):"";
+const LT=d=>{const t=(d.tn||"").trim(),e=LTONES[t]!=null?LTONES[t]:t;return e?" "+e:""};
+const sdir=cs=>{if(cs.length<2)return "";const o=cs.slice().sort((a,b)=>S.chars.indexOf(a)-S.chars.indexOf(b)),L=c=>c.name||tp(c);return "Screen direction (180-degree rule): "+L(o[0])+" stays on the left of frame, "+L(o[1])+" on the right"+(o.length>2?", "+o.slice(2).map(L).join(" and ")+" in the center":"")+", the same as in every other scene. "};
+const ident=B=>"Strict character consistency: every character must keep exactly the same face, age, skin tone, hairstyle and hair color, body proportions, costume, colors and accessories as in their "+(B?"character file":"reference image")+" in every scene; no morphing, no outfit changes, no added or missing accessories. ";
+const bld=(B,i)=>{const f=/Flow|Veo/.test(S.model||""),n=sw(i+1);return B?(f?"Ingredients to Video using the character and location files as ingredients":"text-to-video using the character and location files as references"):(f?`Frames to Video starting from the generated ${n} image`:`image-to-video starting from the generated ${n} image`)};
+const palEn=()=>S.pal?(PALETTES[S.pal]||S.pal):"a rich natural color palette";
+const actKey=(s,i)=>{const n=S.scenes.length;return (s.ac||"").trim()||(i<Math.ceil(n*0.25)?"بداية":i>=n-Math.max(1,Math.ceil(n*0.2))?"حل":"عقدة")};
+MD["Veo (Gemini)"]={sec:8,au:1,neg:0,ars:"16:9,9:16",tip:"نفس خصائص Veo لكن داخل Gemini؛ ابدأ من صورة المشهد أو المراجع."};
+VP.music=["with a slightly lighter, airier feel","with a warmer, fuller texture","with a gentler, slower pulse","with a more playful rhythm","with a deeper, more emotional tone"];
+const mkeys=()=>[...new Set(S.scenes.map(musicKey))].filter(k=>MUSIC[k]!="NONE");
+GR.music={n:()=>mkeys().length,l:i=>"music_"+sw(i+1)+" — "+mkeys()[i],f:(i,v)=>{const k=mkeys()[i],u=S.scenes.map((s,j)=>musicKey(s)==k?"scene_"+sw(j+1):"").filter(Boolean).join(", ");return `music_${sw(i+1)} — ${musicEn(k)}, soft and unobtrusive so dialogue stays clear, about 30 seconds, loop-friendly, no vocals or lyrics, no sudden loud peaks, safe for children. Used in: ${u}.`+vx("music",v)}};
+function parseScript(){const out=[];String(S.script||"").split(/\r?\n/).forEach(raw=>{const l=raw.replace(/\*\*([^*]+?)\*\*/g,"$1").replace(/\*[^*]*\*/g," ").replace(/\*/g,"").replace(/\([^)]*\)|（[^）]*）|\[[^\]]*\]/g," ").replace(/^[\s\-–—•#>\d.]+/,"").trim();const m=l.match(/^([^:：]{1,40}?)\s*[:：]\s*(.+)$/);if(!m)return;const n=m[1].replace(/["“”«»'‘’„]/g,"").trim(),t=m[2].trim().replace(/^["“”«»'‘’„\s]+|["“”«»'‘’„\s]+$/g,"").trim();if(!n||!t)return;if(/^(scene|segment|title|part)/i.test(n)||/^(ال)?(مشهد|مقطع|عنوان|جزء|فصل)/.test(n))return;if(n.split(/\s+/).length>4)return;out.push({n,t})});return out}
+
+const musicCard=()=>`<div class="card"><h3>🎵 الموسيقى والمؤثرات الصوتية</h3><p class="note">الافتراضي بلا موسيقى في كل المشاهد، اختر نوعاً لمشهد إن أردت إضافة موسيقى. اكتب المؤثرات مفصولة بفواصل (خطوات، باب يُفتح…) وتُضاف مع صوت المكان تلقائياً، وتظهر في برومت الفيديو للموديلات التي تدعم الصوت.</p>${S.scenes.map((s,i)=>`<div class="g"><b>مشهد ${i+1}</b>${I(`scenes.${i}.mu`,"بدون موسيقى (اختر نوعاً لإضافتها)","mul")}${I(`scenes.${i}.sfx`,"مؤثرات صوتية","sfl")}</div>`).join("")}<button hidden onclick="gen('music')">🎼 توليد برومتات الموسيقى</button>${OUTG("music")}</div>`;
+
+function closeBoard(){const b=$("#board");if(b)b.remove();document.body.classList.remove("boarding")}
+function openBoard(){closeBoard();const rows=S.scenes.map((s,i)=>{const cs=sc(s),ls=s.d.filter(d=>d.t&&S.chars[+d.s]);return `<tr><td>${i+1}<div>scene_${sw(i+1)}</div></td><td>${actKey(s,i)}<div class="note">${esc(s.ty)}</div></td><td>${esc(s.place)}<div class="note">${envFn(s.place)}</div></td><td>${cs.map(c=>`<div>${esc(c.name||c.fn)}</div>`).join("")}</td><td>${esc(s.cam||"تلقائي")}<div class="note">${esc(s.atm||"تلقائي")}</div></td><td>${ls.map(d=>`<div><b>${esc(S.chars[+d.s].name||S.chars[+d.s].fn)}:</b> ${esc(d.t)}</div>`).join("")||"—"}</td><td>${est(s).toFixed(1)}ث</td><td class="pr">${esc(vidP(s,i,S.vr["video"+i]||0))}</td></tr>`}).join("");
+ const b=document.createElement("div");b.id="board";b.innerHTML=`<div class="row noprint"><b>🗂️ لوحة المشاهد</b><span><button class="p" onclick="try{window.print()}catch(e){}">🖨️ طباعة / PDF</button><button class="s" onclick="closeBoard()">✖ إغلاق</button></span></div><h2>${esc(S.proj||"")}</h2><p class="note">${esc(S.model||"")} · ${S.scenes.length} مشهد · ${esc(S.vst||"")} · ${S.ar}</p><div style="overflow-x:auto"><table><thead><tr>${["#","جزء القصة","المكان","الشخصيات","الكاميرا/الجو","الحوار","المدة","برومت الفيديو"].map(t=>`<th>${t}</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table></div><p class="note">${crT()}</p>`;document.body.appendChild(b);document.body.classList.add("boarding")}
+
+const BPM={"هادئة دافئة":70,"فرح ومرح":120,"تشويق":90,"حزن مؤثر":60,"بطولية":110,"غموض":80,"احتفالية":125};
+const LENS={"35mm أنامورفيك":"35mm anamorphic lens with soft bokeh and a cinematic widescreen look","85mm بورتريه":"85mm portrait prime lens isolating the subject with creamy background blur","24mm واسعة":"24mm wide-angle lens for epic scale","50mm قياسية":"50mm standard lens with natural perspective","14mm فائقة الاتساع":"14mm ultra-wide lens","135mm تقريب":"135mm telephoto lens with compressed background","ماكرو":"macro lens with extreme close detail"};
+const lensT=s=>s.ln?"Lens: "+(LENS[s.ln]||s.ln)+". ":"";
+const motT=s=>{const ms=+s.ms||(s.ty=="حركة"?8:3);let t=ms<=3?`Motion strength low (${ms}/10): calm subtle movement, minimal body motion, stable faces and hands to prevent morphing. `:ms<=6?`Motion strength moderate (${ms}/10): natural measured movement. `:`Motion strength high (${ms}/10): dynamic energetic movement. `;if(s.b1||s.b2||s.b3)t+="Action beats: "+[s.b1?"starts with "+s.b1:"",s.b2?"transitions to "+s.b2:"",s.b3?"ending with "+s.b3:""].filter(Boolean).join(", ")+". ";return t};
+Object.assign(CAM,{"Steadicam تتبع":"Steadicam tracking shot","FPV درون":"FPV drone dive","رافعة (Crane) صاعدة":"crane ascending shot","Whip pan سريع":"whip pan","زاوية هولندية مائلة":"low Dutch angle"});
+Object.assign(CAMV,{"Steadicam تتبع":["smooth Steadicam tracking shot following the character","fluid Steadicam follow shot gliding beside the subject","stabilized Steadicam push through the space"],"FPV درون":["fast FPV drone dive swooping toward the subject","sweeping FPV drone flythrough of the location","dynamic FPV drone move diving and banking"],"رافعة (Crane) صاعدة":["crane shot ascending to reveal the scene","slow jib arm rising above the characters","majestic crane lift ending on a wide view"],"Whip pan سريع":["quick whip pan to the next subject with motion blur","sharp whip pan transition with directional blur","fast whip pan snapping to the reaction"],"زاوية هولندية مائلة":["low Dutch angle conveying tension","tilted Dutch angle from a low position","canted low angle adding unease"]});
+Object.assign(CAMC,{"Steadicam تتبع":"c-track","FPV درون":"c-fpv","رافعة (Crane) صاعدة":"c-tilt","Whip pan سريع":"c-whip","زاوية هولندية مائلة":"c-dutch"});
+Object.assign(ATM,{"إضاءة رامبرانت":"Rembrandt lighting","أشعة ضوء حجمية (God rays)":"volumetric god rays","كياروسكورو (تباين حاد)":"chiaroscuro lighting"});
+Object.assign(ATMV,{"إضاءة رامبرانت":["Rembrandt lighting with a triangle of light on the shadowed cheek","classic Rembrandt key light from the side, soft fill","warm Rembrandt portrait lighting with gentle falloff"],"أشعة ضوء حجمية (God rays)":["volumetric god rays streaming through the scene","golden light shafts piercing the haze","magical volumetric sunbeams with floating dust"],"كياروسكورو (تباين حاد)":["chiaroscuro lighting with sharp dramatic shadows","strong light-dark contrast, deep pools of shadow","moody chiaroscuro with a single strong light source"]});
+Object.assign(ATMC,{"إضاءة رامبرانت":"a-remb","أشعة ضوء حجمية (God rays)":"a-rays","كياروسكورو (تباين حاد)":"a-drama"});
+Object.assign(VST,{"3D بيكسار (Octane)":{a:"3D CGI animation",f:"3D CGI animated film",l:"Pixar/Disney-style stylized 3D characters, Octane render, subsurface scattering skin, stylized proportions, 8k textures",x:"2D flat drawing, photorealistic live-action, stick figures"},"أنمي ملحمي (Shinkai)":{a:"anime-style 2D animation",f:"epic anime film",l:"Makoto Shinkai-style atmospheric skies, vibrant chromatic contrast, intricate line work, luminous backgrounds",x:"photorealism, 3D CGI render, western cartoon style"},"سينما 35mm (Arri Alexa)":{a:"photorealistic cinematic footage shot on Arri Alexa LF",f:"photorealistic 35mm cinematic film",l:"Kodak Vision3 500T film grain, natural skin pores, shallow depth of field, cinematic color grade",x:"cartoon, illustration, 3D render, anime, plastic skin"},"فانتازيا مظلمة":{a:"dark fantasy cinematic animation",f:"dark fantasy animated film",l:"muted gold and ash tones, gothic architecture, heavy atmospheric mist, moody painterly detail",x:"bright cartoon colors, flat lighting, photorealistic snapshot"}});
+VP.locs=VP.env;VP.lip=["with clearer pacing marks","with more expressive delivery notes","with softer emotional delivery","with brisker timing","with longer natural pauses"];
+
+const f0=GR.chars.f;GR.chars.f=(i,v)=>f0(i,v)+(S.chars[i].seed?`\nSEED (set in the tool settings if available): ${S.chars[i].seed}`:"");
+GR.locs={n:()=>places().length*3,l:i=>envFn(places()[Math.floor(i/3)])+"_"+["master","reverse","landmark"][i%3],f:(i,v)=>{const p=places()[Math.floor(i/3)],k=i%3,sc0=S.scenes.find(x=>x.place==p),a=["a master wide shot establishing the whole place","a reverse-angle shot looking back from the opposite side of the same place","a close shot of the key landmark and props of the place"][k];return `${envFn(p)}_${["master","reverse","landmark"][k]} — ${a} of ${en(PL,p)}, no characters, ${PE[p]||"the same key landmarks and props"}, identical architecture, colors and props as the other angles of this location, ${sc0&&sc0.atm?en(ATM,sc0.atm):"natural daylight"}. ${STYLE}`+vx("locs",v)}};
+GR.lip={n:()=>S.scenes.length,l:i=>sw(i+1),f:(i,v)=>{const s=S.scenes[i],dd=s.d.filter(d=>d.t&&S.chars[+d.s]);if(!dd.length)return sw(i+1)+" — (no dialogue)";return `${sw(i+1)} — TTS / lip-sync cues (ElevenLabs, Hedra, LivePortrait): `+dd.map(d=>{const c=S.chars[+d.s];return `[${c.name||tp(c)} | voice: ${vd(c).replace(/^[^:]+: /,"")}${LT(d)?" | delivery:"+LT(d):""}] \"${d.t}\"`}).join(" ")+` Target length ~${est(s).toFixed(1)}s.`+vx("lip",v)}};
+
+function addRev(i){const s=JSON.parse(JSON.stringify(S.scenes[i]));s.d=[{s:"0",t:""},{s:"0",t:""}];s.act="reverse shot of the previous scene, mirrored camera angle on the listening character, same location, costumes and lighting";s.cam="فوق الكتف";s.cv=0;s.ty="مشهد حواري";s.st="لم يُولّد";S.scenes.splice(i+1,0,s);S.items={};render();msg("✅ أُضيفت لقطة عكسية بعد المشهد "+(i+1)+"، اكتب حوارها")}
+const locCard=()=>`<div class="card"><h3>📐 بطاقة المكان (3 زوايا)</h3><p class="note">لكل مكان: لقطة رئيسية واسعة + زاوية عكسية + لقطة لمعلم المكان، لثبات الجدران والأشجار عبر المشاهد.</p><button class="p" onclick="gen('locs')">📐 توليد بطاقات الأماكن</button>${OUTG("locs")}</div>`;
+const motCard=()=>`<div class="card"><h3>🎚️ شدة الحركة والعدسة ونبضات الحركة</h3><p class="note">شدة الحركة: رقم صغير (2-3) للمشاهد الهادئة والحوار، وكبير (7-9) للجري والمعارك. العدسة: تغيّر شكل الصورة (واسعة، بورتريه…). الحركات الثلاث: صف باختصار ما تفعله الشخصية في بداية المشهد ثم وسطه ثم نهايته. كل هذا اختياري، وإن تركته فارغاً يُختار تلقائياً.</p>${S.scenes.map((s,i)=>`<div class="card"><b>مشهد ${i+1}</b><div class="g">${F("شدة الحركة (1-10)",`<input type="range" min="1" max="10" data-k="scenes.${i}.ms" value="${+s.ms||(s.ty=="حركة"?8:3)}">`)}${F("العدسة",I(`scenes.${i}.ln`,"تلقائي","lnl"))}</div><div class="g">${I(`scenes.${i}.b1`,"مثال: ينظر للأسفل (البداية)")}${I(`scenes.${i}.b2`,"مثال: يرفع رأسه بدهشة (الوسط)")}${I(`scenes.${i}.b3`,"مثال: يبتسم بهدوء (النهاية)")}</div></div>`).join("")}</div>`;
+const lipCard=()=>`<div class="card"><h3>🗣️ نصوص المزامنة الشفاهية</h3><p class="note">صيغة جاهزة لأدوات الدبلجة والمزامنة (ElevenLabs وHedra وLivePortrait) مع وصف الصوت والنبرة لكل متحدث.</p><button class="p" onclick="gen('lip')">🗣️ توليد نصوص المزامنة</button>${OUTG("lip")}</div>`;
+
+const PLSLUG={"الحديقة":"garden","المنزل (الصالة)":"home_living_room","غرفة النوم":"bedroom","المطبخ":"kitchen","المدرسة":"school_yard","الفصل الدراسي":"classroom","الشارع":"street","السوق":"market","القرية":"village","المزرعة":"farm","الشاطئ":"beach","الصحراء":"desert","الغابة":"forest","الجبل":"mountain","المسجد":"mosque","المستشفى":"hospital","الملعب":"playground"};
+const SHOTS={"لقطة واسعة جداً":"extreme wide shot","لقطة واسعة":"wide shot","لقطة متوسطة":"medium shot","متوسطة قريبة":"medium close-up","لقطة قريبة":"close-up","قريبة جداً":"extreme close-up","فوق الكتف (OTS)":"over-the-shoulder shot","منظور الشخصية (POV)":"point-of-view shot"};
+const shotTxt=s=>s.sh?"Shot size: "+(SHOTS[s.sh]||s.sh)+". ":"";
+const SO=(k,keys,ph)=>`<select data-k="${k}"><option value="">${ph}</option>${keys.map(n=>`<option ${get(k)==n?"selected":""}>${n}</option>`).join("")}</select>`;
+const TK={"ولد":"boy","بنت":"girl","رجل":"man","امرأة":"woman","شيخ كبير":"oldm","عجوز":"oldf"};
+const COL=["navy blue","forest green","burgundy","mustard yellow","teal","chocolate brown","charcoal gray","coral orange","royal purple","sky blue"];
+const EY=["dark brown eyes","hazel eyes","black eyes","light brown eyes"];
+const LK={boy:[["short black hair","curly dark hair","neat side-parted hair","wavy brown hair"],["a red backpack","round glasses","a small cap","a school badge"]],girl:[["long braided black hair","a neat bob haircut","wavy dark hair in a ponytail","shoulder-length hair with bangs"],["a pink hair clip","a small backpack","a beaded bracelet","a star pendant necklace"]],man:[["short neat black hair","a trimmed dark beard","slightly graying temples","thick wavy hair"],["a leather watch","glasses","a prayer-bead bracelet","a sturdy belt"]],woman:[["dark hair neatly tied back","soft wavy hair","a low bun","long straight hair"],["a patterned scarf","small earrings","a pendant necklace","gentle bracelets"]],oldm:[["white hair and a full white beard","a trimmed gray beard","balding with white sideburns","thick white eyebrows"],["a wooden walking cane","round spectacles","a knitted cap","a prayer-bead string"]],oldf:[["gray hair under a shawl","white hair in a bun","gentle wrinkles and a kind smile","silver hair with a headscarf"],["a warm shawl","round spectacles","a wooden cane","a simple brooch"]]};
+const GAR={boy:"a short-sleeved thobe",girl:"a long modest dress and a light headscarf",man:"a thobe with a ghutra",woman:"an abaya with a colored hijab",oldm:"a thobe with a bisht",oldf:"a long dress with a shawl"};
+function autoLook(){S.chars.forEach((c,i)=>{const k=TK[c.type]||"boy",[H,A]=LK[k];if(!c.face)c.face=H[i%H.length]+", "+EY[(i+1)%EY.length];if(!c.outf)c.outf=(S.lang=="العربية"?GAR[k]:"culturally accurate everyday clothing")+" in "+COL[(i*3)%COL.length]+", "+A[(i+2)%A.length]});render();msg("✅ تم تنويع الملامح والملابس للحقول الفارغة")}
+function gCX(){if(!S.script.trim())return msg("الصق السكريبت في التبويب 1 أولاً");show("cx",`Read the dialogue-only script below and return ONLY a JSON array (no extra text), one object per speaking character, with keys: name (exactly as written in the script), type (one of: ولد, بنت, رجل, امرأة, شيخ كبير, عجوز, طفل رضيع, حيوان), age (number), trait (short personality, English), look (hairstyle, hair color, eye color, build and a distinctive feature, English), outfit (clothing with specific colors, fabrics and one signature accessory, English, culturally accurate for ${cult()}). IMPORTANT: make every character visually distinct from the others: different hairstyles and hair colors, different outfit styles and color schemes (no two characters may share the same main outfit color), different accessories and body builds; pick a clearly different color identity for each character. Infer age and gender from names, relationships and speech style. Script:\n${S.script}`)}
+const atmSug=(s,i)=>{const t=[s.act,...s.d.map(d=>d.t)].join(" "),K=[[/مطر|أمطار|ممطر/,"مطر"],[/غيوم|غيمة|سحاب/,"غيوم"],[/ليل|قمر|نجوم|ظلام|مساء/,"ليل بقمر"],[/شروق|فجر|صباح/,"شروق"],[/غروب|عصر/,"غروب ذهبي"],[/ضباب/,"ضباب"],[/ثلج|شتاء|برد/,"ثلج"],[/عاصفة|غبار/,"عاصفة رملية"],[/عيد|حفل|احتفال|فرح/,"أجواء احتفال"],[/ريح|نسيم/,"رياح خفيفة"]],k=K.find(x=>x[0].test(t));if(k)return k[1];if(["المنزل (الصالة)","غرفة النوم","المطبخ","الفصل الدراسي","المستشفى"].includes(s.place))return "إضاءة داخلية دافئة";const g=(GP[S.genre]||GP["عائلية"])[1],n=S.scenes.length;return i==0?g[0]:i==n-1&&n>2?g[2]:g[1]};
+function setAtm(i,v){S.scenes[i].atm=v;S.scenes[i].av=0;render()}
+function sugAll(){S.scenes.forEach((s,i)=>{if(!s.atm){s.atm=atmSug(s,i);s.av=0}});render();msg("✅ تم تطبيق المقترحات على المشاهد الفارغة")}
+const camScenes=()=>S.scenes.map((s,i)=>`<div class="card"><b>مشهد ${i+1}</b> <span class="note">${esc(s.place)}</span><div class="g"><div>${F("حركة الكاميرا",SO(`scenes.${i}.cam`,Object.keys(CAM),"— تلقائي حسب الحدث —"))}${F("حجم اللقطة",SO(`scenes.${i}.sh`,Object.keys(SHOTS),"— تلقائي —"))}<div class="note" id="ph_cam_${i}">${phr(s,"cam")}</div></div><div id="pv_cam_${i}">${tile("cam",s.cam)}</div></div></div>`).join("");
+const atmScenes=()=>S.scenes.map((s,i)=>{const sg=atmSug(s,i);return `<div class="card"><b>مشهد ${i+1}</b> <span class="note">${esc(s.place)}</span><div class="g"><div>${F("الجو العام",SO(`scenes.${i}.atm`,Object.keys(ATM),"— تلقائي —"))}<div class="note">💡 مقترح من سياق المشهد: <b>${sg}</b> <button class="s" onclick="setAtm(${i},'${sg}')">تطبيق</button></div><div class="note" id="ph_atm_${i}">${phr(s,"atm")}</div></div><div id="pv_atm_${i}">${tile("atm",s.atm)}</div></div></div>`}).join("");
+const nameCard=()=>{S.pf=S.pf||{};return `<div class="card"><h3>🏷️ أسماء ملفات الأماكن</h3><p class="note">هذا الاسم يُكتب في أول برومت المكان وفي برومتات المشاهد والفيديو، استخدمه كاسم للصورة عند توليدها. غيّره إن أردت (إنجليزي صغير بشرطة سفلية).</p>${places().map(p=>`<div class="g"><b>${esc(p)}</b>${I("pf."+p,envFn(p))}</div>`).join("")}</div>`};
+
+const H=o=>{const t=JSON.stringify(o);let h=5381;for(let i=0;i<t.length;i++)h=((h<<5)+h+t.charCodeAt(i))|0;return h};
+const CMP={chars:()=>S.chars,scenes:()=>S.scenes,places:()=>S.scenes.map(s=>[s.place,s.atm]),style:()=>[S.vst,S.ar,S.pal,S.lang,S.pf],model:()=>[S.model,S.mp,S.path]};
+const DEP={chars:["chars","style"],env:["places","style"],locs:["places","style"],scenes:["chars","scenes","style"],video:["chars","scenes","style","model"],music:["scenes"],voice:["chars"]};
+const CNAME={chars:"الشخصيات",scenes:"المشاهد",places:"الأماكن/الجو",style:"النمط/النسبة/اللغة/الألوان/أسماء الملفات",model:"الموديل/المسار"};
+const AFF={chars:"برومتات المشاهد والفيديو",env:"برومتات المشاهد والفيديو (أسماء الملفات)",locs:"برومتات الفيديو",scenes:"برومتات الفيديو"};
+const stamp=g=>{S.hc=S.hc||{};S.hc[g]={};(DEP[g]||[]).forEach(c=>S.hc[g][c]=H(CMP[c]()))};
+function iss(g){const W=[],m=mp();
+ if(g=="chars"){const seen={},fs={},lk={};S.chars.forEach((c,i)=>{const nm=(c.name||"").trim(),lb=c.name||c.fn;if(isNar(nm))W.push([`الشخصية ${i+1} «${nm}» هي الراوي وليست شخصية مرئية: احذفها من الشخصيات (يظهر صوتها فقط)`,1]);if(!nm)W.push([`الشخصية ${i+1} بلا اسم`,1]);else if(seen[nm])W.push([`الاسم ${nm} مكرر`,1]);else seen[nm]=1;if(fs[c.fn])W.push([`اسم الملف ${c.fn} مكرر`,1]);fs[c.fn]=1;if(!c.look&&!c.lock&&!c.trait&&!c.face&&!c.outf)W.push([`${lb}: بلا وصف للشكل والملابس (استخدم زر التنويع التلقائي)`,1]);const key=((c.outf||"")+(c.look||"")+(c.lock||"")).trim();if(key){if(lk[key])W.push([`${lb} و ${lk[key]} لهما الوصف/الملابس نفسه`,1]);else lk[key]=lb}})}
+ if(g=="env"||g=="locs"){const fs={};places().forEach(p=>{const f=envFn(p);if(fs[f])W.push([`اسم الملف ${f} مكرر بين مكانين`,2]);fs[f]=1;if(!PLSLUG[p]&&!(S.pf&&S.pf[p]))W.push([`المكان ${p}: اكتب اسم ملف إنجليزي مميزاً له`,2])});S.scenes.forEach((s,i)=>{if(!s.place)W.push([`مشهد ${i+1} بلا مكان`,2])})}
+ if(g=="scenes"){S.scenes.forEach((s,i)=>{if(!sc(s).length)W.push([`مشهد ${i+1}: لا توجد شخصيات (حدّد من يظهر أو أضف حواراً)`,2]);if(!s.act&&!s.d.some(d=>d.t)&&!s.nr)W.push([`مشهد ${i+1}: بلا وصف ولا حوار`,2])});S.chars.forEach((c,i)=>{if(!c.name)W.push([`الشخصية ${i+1} بلا اسم`,1])})}
+ if(g=="video"){if(!(m.ars||"").split(",").map(x=>x.trim()).includes(S.ar))W.push([`النسبة ${S.ar} غير ضمن المدعومة لـ ${S.model}`,0]);if(!+m.au&&S.scenes.some(s=>s.d.some(d=>d.t)))W.push([`${S.model} لا يدعم الصوت: ستُولّد مقاطع صامتة مع DUB SCRIPT`,0]);S.scenes.forEach((s,i)=>{const p=`مشهد ${i+1}: `;if(!s.d.some(d=>d.t)&&!s.nr)W.push([p+"بلا حوار (اسحبه من السكريبت)",6]);const t=est(s);if(t>m.sec)W.push([p+`الحوار ~${t.toFixed(1)} ث أطول من ${m.sec} ث: قسّمه`,6]);s.d.forEach(d=>{if(d.t&&!S.chars[+d.s])W.push([p+"متحدث غير موجود",1])})});if(+m.au)S.chars.forEach((c,i)=>{if(!c.vs.length)W.push([`${c.name||c.fn}: لم تحدد نمط صوت`,3])})}
+ return W}
+const gck=g=>{const L=iss(g),hc=(S.hc||{})[g]||{},ch=(DEP[g]||[]).filter(c=>hc[c]!==undefined&&hc[c]!==H(CMP[c]()));let h="";if(ch.length)h+=`<div class="note" style="color:#ff6b6b">⚠️ تغيّر بعد آخر توليد: ${ch.map(c=>CNAME[c]).join("، ")} — اضغط «إعادة توليد الكل» لتحديث هذه البرومتات.</div>`;h+=L.length?L.map(x=>`<div class="note">• ${esc(x[0])} <button class="s" onclick="goTo(${x[1]},'${lbl(x[0])}')">اذهب إلى المكان</button></div>`).join(""):`<div class="note">✅ لا توجد ملاحظات على هذا الجزء.</div>`;if(AFF[g])h+=`<div class="note">🔗 تغييرات هذا الجزء تؤثر على: ${AFF[g]}.</div>`;return `<div class="card"><b>🔎 فحص هذا الجزء</b>${h}</div>`};
+function gen(g,bump){S.items[g]=Array.from({length:GR[g].n()},(_,i)=>{const k=g+i;if(bump)S.vr[k]=(S.vr[k]||0)+1;return GR[g].f(i,S.vr[k]||0)});stamp(g);$("#o_"+g).innerHTML=drawG(g)}
+
+function goTo(tab,label){S.tab=tab;render();setTimeout(()=>{const m=(label||"").match(/^شخصية (\d+)/),c0=m?S.chars[+m[1]-1]:null,alt=c0&&(c0.name||c0.fn),b=[...document.querySelectorAll("#v .card > b")].find(x=>{const t=x.textContent.trim();return t==label||(alt&&t==alt)});if(b){const c=b.parentElement;c.scrollIntoView({behavior:"smooth",block:"center"});c.style.outline="3px solid #d97706";setTimeout(()=>c.style.outline="",2500)}else scrollTo({top:0,behavior:"smooth"})},60)}
+const lbl=t=>{const m=t.match(/^(مشهد|الشخصية) (\d+)/);if(m)return (m[1]=="مشهد"?"مشهد ":"شخصية ")+m[2];const i=S.chars.findIndex(c=>{const n=c.name||c.fn;return n&&t.startsWith(n)});return i>=0?"شخصية "+(i+1):""};
+const spk=s=>{const n=[...new Set(s.d.filter(d=>d.t&&S.chars[+d.s]).map(d=>S.chars[+d.s].name||S.chars[+d.s].fn))];return n.length?n.join("، "):(s.nr?"الراوي فقط":"لا يوجد حوار بعد")};
+const vcAuto=c=>{const a=+c.age||0,t=TK[c.type]||"";if(t=="oldm")return "شيخ";if(t=="oldf")return "عجوز";if(t=="man")return a>=60?"شيخ":"ذكر بالغ";if(t=="woman")return a>=60?"عجوز":"أنثى بالغة";if(t=="girl")return "بنت";return "ولد"};
+const shotSug=(s,i)=>{const n=S.scenes.length,sp=new Set(s.d.filter(d=>d.t).map(d=>d.s)).size,tx=[s.act,...s.d.map(d=>d.t)].join(" ");if(s.ty=="افتتاحي"||i==0||s.ty=="ختام"||i==n-1||s.ty=="حركة")return "لقطة واسعة";if(s.ty=="ذروة"||s.ty=="عاطفي"||/بكاء|حزن|دموع|ابتسم|يبكي|خوف/.test(tx))return "لقطة قريبة";if(s.ty=="صراع")return "متوسطة قريبة";if(sp>=2)return i%2?"فوق الكتف (OTS)":"لقطة متوسطة";return sp==1?"متوسطة قريبة":"لقطة متوسطة"};
+const autoCard2=()=>`<div class="card"><b>🗣️ المتحدثون والحوار</b><p class="note">يُسحب الحوار من السكريبت تلقائياً ويُوزَّع على المشاهد، ويظهر تحت كل مشهد من يتكلم فيه. لا تحتاج لكتابة من يتحدث مع من. إن عدّلت السكريبت اضغط الزر لإعادة السحب.</p><button class="p" onclick="applyD()">📥 إعادة سحب الحوار والمتحدثين</button></div>`;
+
+/* تعديل 6: إضافة خيار "قصة من إبداعك" كأول اختيار في التبويب الأول */
+const TPLC={"قصة من إبداعك":[{n:"✍️ اكتب فكرتك أو قصتك بحرية",g:"أخلاقية",m:2,i:""}],
+"مدرسية":TPL,
+"عائلية":[{n:"👨‍👩‍👧 بر الوالدين",g:"عائلية",m:1,i:"ابن مشغول بهاتفه ينتبه فجأة لتعب والدته فيقرر أن يقضي معها وقتاً ويساعدها، فتعود البهجة للبيت"},{n:"🤲 التعاون في البيت",g:"عائلية",m:1,i:"أسرة تتقاسم ترتيب البيت قبل زيارة الجدة، ويكتشف الأطفال أن العمل معاً أسرع وأمتع"},{n:"🧒 المشاركة بين الإخوة",g:"عائلية",m:1,i:"أخوان يتخاصمان على لعبة، فتعلمهما أمهما قيمة المشاركة والاعتذار"},{n:"🕯️ الصبر مع الجد",g:"عائلية",m:1,i:"حفيد يتضايق من بطء جده ثم يتعلم أن الصبر على الكبار يجلب الحكمة والحب"},{n:"🍽️ لمّة العائلة",g:"عائلية",m:1,i:"أسرة تتناول العشاء بلا شاشات لأول مرة، فتتحدث وتضحك وتتقارب"},{n:"🎁 العطاء داخل الأسرة",g:"عائلية",m:1,i:"طفلة تدخر مصروفها لتفاجئ أمها بهدية بسيطة، فتتعلم أن الحب في الاهتمام لا في الثمن"}],
+"اجتماعية":[{n:"🏠 مساعدة الجار",g:"اجتماعية",m:1,i:"طفل يلاحظ جاراً كبيراً يحمل أكياسه الثقيلة فيساعده، فتتحول المساعدة إلى صداقة"},{n:"🕊️ التسامح",g:"اجتماعية",m:1,i:"صديقان يتخاصمان بسبب سوء فهم، ثم يتصالحان حين يقدّر أحدهما الآخر"},{n:"🤝 الصداقة الحقيقية",g:"اجتماعية",m:1,i:"ولد جديد في الحي يشعر بالوحدة فيدعوه أبناء الحي للعب ويصبحون أصدقاء"},{n:"🌍 احترام الاختلاف",g:"اجتماعية",m:1,i:"أطفال من خلفيات مختلفة يعدّون مشروعاً معاً ويكتشفون أن الاختلاف يُثري العمل"},{n:"🚑 نجدة المحتاج",g:"اجتماعية",m:1,i:"طفلة تشاهد ماراً يسقط فتستدعي الكبار وتساعده، وتتعلم معنى المبادرة"}],
+"أخلاقية":[{n:"🔐 الأمانة",g:"أخلاقية",m:1,i:"ولد يجد محفظة في الطريق فيعيدها لصاحبها رغم الغرية"},{n:"🍞 الكرم",g:"أخلاقية",m:1,i:"طفل يقسم طعامه مع زميل لم يحضر طعاماً، فيتعلم أن المشاركة تزيد البركة"},{n:"🦁 الشجاعة",g:"أخلاقية",m:1,i:"طفلة خجولة تواجه خوفها وتتحدث أمام الصف لأول مرة"},{n:"⏳ الصبر",g:"أخلاقية",m:1,i:"طفل يزرع بذرة ويستعجل نموها، ثم يتعلم أن الصبر يجلب الثمار"},{n:"🙏 الاعتذار عن الخطأ",g:"أخلاقية",m:1,i:"طفل يجرح مشاعر صديقه ثم يعتذر فتعود الصداقة أقوى"},{n:"😊 القناعة",g:"أخلاقية",m:1,i:"طفلة تطلب المزيد من الألعاب ثم تكتشف السعادة فيما تملك"}],
+"علمية":[{n:"🌻 النباتات والشمس",g:"تعليمية للأطفال",m:1,i:"بذرة صغيرة تحكي لطفلين كيف تنمو بالماء والشمس والتربة"},{n:"🌙 مراحل القمر",g:"تعليمية للأطفال",m:1,i:"جدة تشرح لحفيدتها لماذا يتغير شكل القمر كل ليلة بمراقبة السماء"},{n:"🦋 دورة حياة الفراشة",g:"تعليمية للأطفال",m:1,i:"يراقب طفلان يرقة تتحول إلى فراشة ويتعلمان مراحل النمو"},{n:"🧼 نظافة اليدين والصحة",g:"تعليمية للأطفال",m:1,i:"طفلة تشرح لأصدقائها كيف تمنع الجراثيم المرض بغسل اليدين"}],
+"دينية":[{n:"🤲 الصدقة",g:"أخلاقية",m:1,i:"طفل يتصدق من مصروفه على محتاج فيشعر بسعادة أكبر من الشراء"},{n:"🐱 الرحمة بالحيوان",g:"أخلاقية",m:1,i:"طفل يعثر على قطة جائعة فيطعمها ويتعلم الرحمة"},{n:"💐 شكر النعم",g:"عائلية",m:1,i:"طفل يشتكي من طعامه ثم يرى من لا يجد ما يكفيه فيتعلم شكر النعمة"},{n:"🕌 آداب المسجد",g:"أخلاقية",m:1,i:"أب يعلّم ابنه آداب دخول المسجد والهدوء واحترام المكان"}],
+"وطنية":[{n:"🇰🇼 حب الوطن",g:"اجتماعية",m:1,i:"جد يحكي لحفيده كيف بُني الوطن بالجهد والوفاء"},{n:"⚖️ احترام القانون",g:"اجتماعية",m:1,i:"طفل يلتزم بالدور في الطابور ويُقنع أصحابه بأن النظام يحمي الجميع"},{n:"🌳 المحافظة على الممتلكات العامة",g:"اجتماعية",m:1,i:"أطفال ينظفون حديقة عامة ويتعلمون أنها ملك للجميع"}]};
+
+function applyT(t){S.mode="gen";S.genre=t.g;S.dur=String(t.m);S.idea=t.i;S.goal=t.n.replace(/^\S+\s*/,"").replace(/^درس علمي:\s*/,"");if(!S.age)S.age="6-8 سنوات";S.tab=0;setN("scenes",Math.ceil(t.m*60/(+mp().sec||8)));gStory();msg("✅ طُبّق «"+t.n+"» وجُهّز برومت السكريبت")}
+function applyTplSel(){const c=TPLC[S.tc]?S.tc:Object.keys(TPLC)[0];if(c=="قصة من إبداعك"){S.idea="";S.own="";render();msg("✍️ اكتب فكرتك أو قصتك في الحقل أدناه");return}applyT(TPLC[c][+S.tv||0])}
+function muAll(){const v=$("#mall").value;S.scenes.forEach(s=>s.mu=v);render()}
+const tplCard=()=>{const cats=Object.keys(TPLC),cat=TPLC[S.tc]?S.tc:cats[0],arr=TPLC[cat];if(!(+S.tv<arr.length))S.tv=0;const isCustom=cat=="قصة من إبداعك";return `<div class="card"><h3>📚 قصص جاهزة حسب المجال والقيمة</h3><div class="g">${F("المجال",`<select onchange="S.tc=this.value;S.tv=0;render()">${cats.map(c=>`<option ${c==cat?"selected":""}>${c}</option>`).join("")}</select>`)}${isCustom?"":F("القيمة / الموضوع",`<select data-k="tv" data-r="1">${arr.map((t,i)=>`<option value="${i}" ${+S.tv==i?"selected":""}>${t.n}</option>`).join("")}</select>`)}</div>${isCustom?`<p class="note">✍️ اختر «قصة من إبداعك» لكتابة فكرتك الخاصة أو ألصق قصتك مباشرة في الأسفل.</p>`:`<p class="note">${esc(arr[+S.tv].i)}</p><button class="p" onclick="applyTplSel()">✨ تطبيق وتجهيز برومت السكريبت</button>`}</div>`};
+
+/* حماية الحقوق الأصلية كما هي تماماً */
+const CRC=[1578,1589,1605,1610,1605,32,1608,1576,1585,1605,1580,1577,58,32,1608,1604,1610,1583,32,1593,1576,1583,1575,1604,1604,1607,32,8212,32,1605,1583,1585,1587,1577,32,1575,1604,1580,1605,1610,1604,32,1575,1604,1575,1607,1604,1610,1577];
+const crT=()=>String.fromCharCode(...CRC),K1=458772939,K2=-2099691693;
+const H2=t=>{let h=7919;for(let i=0;i<t.length;i++)h=(Math.imul(h,31)+t.charCodeAt(i))|0;return h};
+let LOCK=0;
+function lockUp(){if(LOCK)return;LOCK=1;document.body.innerHTML='<div style="padding:30px;text-align:center;font:16px system-ui"><h2>⚠️ توقفت الأداة</h2><p>تم اكتشاف تعديل على حقوق المطوّر. استخدم النسخة الأصلية.</p></div>'}
+function guard(){if(LOCK)return;const t=crT();if(H(t)!==K1||H2(t)!==K2||t.length!==CRC.length){lockUp();return}let f=document.getElementById("cr");if(!f){f=document.createElement("footer");f.id="cr";document.body.appendChild(f)}if(f.textContent!==t)f.textContent=t;const c="text-align:center;font-size:17px;font-weight:600;margin:22px 0 10px;display:block;visibility:visible;opacity:1;color:var(--mu)";if(f.getAttribute("style")!==c)f.setAttribute("style",c);if(f.hidden)f.hidden=false}
+new MutationObserver(()=>guard()).observe(document.body,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:["style","hidden"]});setInterval(guard,2500);
+
+const ARL={"16:9":"16:9 — يوتيوب والتلفاز والكمبيوتر","9:16":"9:16 — تيك توك وريلز إنستجرام وشورتس يوتيوب وسناب","1:1":"1:1 — منشورات إنستجرام وفيسبوك المربعة","4:5":"4:5 — منشورات إنستجرام العمودية","4:3":"4:3 — عرض تقليدي ومنصات تعليمية","21:9":"21:9 — سينمائي عريض"};
+const ARSEL=()=>`<select data-k="ar">${AR.map(a=>`<option value="${a}" ${S.ar==a?"selected":""}>${ARL[a]||a}</option>`).join("")}</select>`;
+const gl=(n,e,c)=>({e,c});
+const DIA={"العربية":{"الفصحى":gl(0,"Modern Standard Arabic","Arab Muslim characters, Gulf/Arabian setting, Arab dress and names"),"مصرية":gl(0,"Egyptian Arabic dialect","Egyptian characters, Egyptian setting (Cairo neighborhoods, the Nile, everyday and traditional Egyptian dress), Egyptian names"),"سعودية":gl(0,"Saudi Arabic dialect","Saudi characters, Saudi setting, thobes and ghutras for men and abayas for women, Saudi names"),"كويتية":gl(0,"Kuwaiti Arabic dialect","Kuwaiti characters, Kuwaiti Gulf setting, dishdashas and ghutras for men and abayas for women, Kuwaiti names"),"إماراتية":gl(0,"Emirati Arabic dialect","Emirati characters, Emirati Gulf setting, kandoras and ghutras for men and abayas for women, Emirati names"),"قطرية":gl(0,"Qatari Arabic dialect","Qatari characters, Qatari Gulf setting, thobes and ghutras for men and abayas for women, Qatari names"),"بحرينية":gl(0,"Bahraini Arabic dialect","Bahraini characters, Bahraini Gulf setting, thobes and ghutras, Bahraini names"),"عمانية":gl(0,"Omani Arabic dialect","Omani characters, Omani setting, dishdashas with massar or kuma caps for men, Omani names"),"شامية":gl(0,"Levantine Arabic dialect (Syrian, Lebanese, Jordanian, Palestinian)","Levantine Arab characters, Levantine town setting, everyday Levantine dress and names"),"عراقية":gl(0,"Iraqi Arabic dialect","Iraqi characters, Iraqi setting, everyday Iraqi dress and names"),"مغاربية":gl(0,"Maghrebi Arabic dialect (Moroccan, Algerian, Tunisian)","North African Maghrebi characters, Maghrebi medina setting, djellabas and traditional dress, Maghrebi names"),"سودانية":gl(0,"Sudanese Arabic dialect","Sudanese characters, Sudanese setting, jalabiyas and tobes, Sudanese names"),"يمنية":gl(0,"Yemeni Arabic dialect","Yemeni characters, Yemeni setting, traditional Yemeni dress and names")},"English":{"أمريكية":gl(0,"American English","American characters with a matching American setting"),"بريطانية":gl(0,"British English","British characters with a matching British setting"),"أسترالية":gl(0,"Australian English","Australian characters with a matching Australian setting")}};
+const dialT=()=>{const d=(DIA[S.lang]||{})[S.dia];return d?(S.lang=="العربية"?"Arabic ("+d.e+")":d.e):(LANG[S.lang]||LANG["العربية"])[0]};
+const cultT=()=>{const d=(DIA[S.lang]||{})[S.dia];return d?d.c:(LANG[S.lang]||LANG["العربية"])[1]};
+const langUI=()=>{if(!LANG[S.lang])S.lang="العربية";const ds=DIA[S.lang]?Object.keys(DIA[S.lang]):[];if(ds.length&&!DIA[S.lang][S.dia])S.dia=ds[0];if(!S.nar)S.nar="m";return F("لغة الفيديو والحوار",`<select onchange="S.lang=this.value;S.dia='';render()">${Object.keys(LANG).map(l=>`<option ${S.lang==l?"selected":""}>${l}</option>`).join("")}</select>`)+(ds.length?F("اللهجة",`<select data-k="dia">${ds.map(d=>`<option ${S.dia==d?"selected":""}>${d}</option>`).join("")}</select>`):"")+F("أسلوب القصة",`<select data-k="sty" data-r="1"><option value="dlg" ${(S.sty||"dlg")=="dlg"?"selected":""}>حواري بين الشخصيات (بدون راوٍ)</option><option value="nar" ${S.sty=="nar"?"selected":""}>راوٍ فقط (تعليق صوتي بلا حوار)</option><option value="mix" ${S.sty=="mix"?"selected":""}>حواري مع راوٍ</option></select>`)+(hasNar()?F("صوت الراوي",`<select data-k="nar"><option value="m" ${S.nar=="m"?"selected":""}>راوٍ (ذكر)</option><option value="f" ${S.nar=="f"?"selected":""}>راوية (أنثى)</option></select>`):"")};
+const hasNar=()=>S.sty=="nar"||S.sty=="mix";
+const narDesc=()=>(S.nar=="f"?"warm adult female narrator voice":"warm adult male narrator voice")+", calm and clear storytelling delivery, speaking "+dial();
+const narT=s=>{if(!hasNar())return "";let t="";if(s.nr&&+mp().au)t+=`Off-screen voice-over narration (${narDesc()}), timed to this scene: the narrator says \"${s.nr}\" starting as the described action begins and finishing before the clip ends, matching exactly what is shown on screen; the narrator is audio-only: never show any narrator, presenter or extra person on screen, and no character mouths these words. `;if(S.sty=="nar")t+="Characters act silently without speaking. ";if(s.nr||S.sty=="nar")t+="Only these characters appear on screen: "+(sc(s).map(c=>c.name||tp(c)).join(", ")||"none")+"; no narrator or other person appears. ";return t};
+const isNar=n=>/^(الراوي|الراوية|راوي|راوية|المعلق|المعلقة|السارد|تعليق صوتي|narrator|voice[- ]?over)$/i.test(String(n||"").trim());
+function distD(){const L=parseScript();if(!L.length){msg("لا يوجد حوار صالح في السكريبت (تبويب 1). الصيغة: الاسم: \"الجملة\"");return false}
+ const narOnly=!L.some(l=>!isNar(l.n));
+ const idx=n=>{const q=n.toLowerCase();let j=S.chars.findIndex(c=>c.name&&c.name.trim().toLowerCase()==q);if(j<0)j=S.chars.findIndex(c=>c.name&&(q.includes(c.name.trim().toLowerCase())||c.name.trim().toLowerCase().includes(q)));if(j<0){j=S.chars.findIndex(c=>!c.name);if(j>=0)S.chars[j].name=n;else{const c=mkC(S.chars.length);c.name=n;S.chars.push(c);j=S.chars.length-1}}return j};
+ const U=[];let cur=null,pend=[];const nu=()=>{cur={d:[],nr:[]};U.push(cur);return cur};
+ L.forEach(l=>{if(isNar(l.n)){if(narOnly)nu().nr.push(l.t);else pend.push(l.t)}else{if(!cur||cur.d.length>=2||pend.length)nu();cur.nr.push(...pend);pend=[];cur.d.push(l)}});
+ if(pend.length){(cur||nu()).nr.push(...pend)}
+ while(S.scenes.length<U.length){const p=S.scenes[S.scenes.length-1],s=mkS();if(p)s.place=p.place;S.scenes.push(s)}
+ S.scenes.forEach(s=>{s.d=[{s:"0",t:""},{s:"0",t:""}];s.nr=""});
+ U.forEach((u,i)=>{const s=S.scenes[i];u.d.forEach((l,k)=>{const j=idx(l.n);s.d[k]={s:String(j),t:l.t};if(!s.cs.includes(String(j)))s.cs.push(String(j))});s.nr=u.nr.join(" ");if(s.nr&&(!s.act||s.act==s.aa)){s.aa="Depict on screen what this voice-over describes (the narrator is never shown): "+s.nr;s.act=s.aa}if(narOnly&&!s.cs.length)S.chars.forEach((c,j)=>s.cs.push(String(j)))});
+ return L.length}
+function autoSp(){if(!S.scenes.some(s=>s.d.some(d=>d.t)||s.nr)&&(S.script||"").trim()&&parseScript().length){distD();msg("✅ سُحب الحوار والمتحدثون من السكريبت تلقائياً")}}
+function autoD(){if(!S.scenes.some(s=>s.d.some(d=>d.t)||s.nr)&&(S.script||"").trim()){if(distD())render()}}
+const nrIn=(s,i)=>hasNar()?F("🎙️ تعليق الراوي لهذا المشهد (يُسحب من السكريبت ويُمزامن مع ما يظهر فيه)",I(`scenes.${i}.nr`,"")):"";
+
+const MOT={"رسم يدوي سلس":"fluid hand-drawn motion with squash and stretch","حركة محدودة":"limited animation with fewer drawings per second and held poses","مبالغة كرتونية":"exaggerated bouncy cartoon motion","CGI سلسة":"smooth CGI motion with natural weight and physics","تمثيل الشخصيات":"expressive character acting with detailed facial and body animation","حركة سينمائية":"cinematic motion with realistic physics and virtual-camera feel","متقطعة (Stop-motion)":"stepped stop-motion movement at a low frame rate with slight jitter","ناعمة وبطيئة":"gentle slow smooth movement","رسم تدريجي":"hand-drawing reveal where lines and colors appear progressively","انتقالات انسيابية (Easing)":"smooth eased motion with clean transitions","حركة هندسية":"geometric shapes sliding, scaling and morphing","قص ولصق":"cutout-style movement with flat pieces sliding and rotating on hinges","ظلال متحركة":"flat shadow silhouettes moving against a lit backdrop","حركة بكسلية":"low-frame pixel movement in stepped 8-bit cycles","طي وتحول":"folding and unfolding paper-like transformations","حركة خفيفة للقصة المصورة":"subtle parallax movement over illustrated storybook pages","سيولة الألوان المائية":"watercolor washes blooming and bleeding as motion","خطوط متذبذبة (Boil)":"hand-sketched line boil with slightly shaky outlines","حركة مختلطة":"mixed-media motion combining different animation techniques"};
+const ANI_C={"2D":"ثنائي الأبعاد (2D)","3D":"ثلاثي الأبعاد (3D)","فني":"تحريك فني (Stop-motion وغيره)","أخرى":"أنواع أخرى","واقعي":"واقعي وسينمائي"};
+const ANI_X={"2D":"3D render, CGI, photorealism, live-action footage","3D":"2D flat drawing, hand-drawn outlines, live-action footage","فني":"smooth CGI render, photorealistic live-action, flat 2D drawing","أخرى":"photorealistic live-action, 3D CGI render"};
+const ANI=[["2D","2D تقليدي","2D traditional hand-drawn animation","hand-painted cel look with organic line variation and painted backgrounds"],["2D","2D كرتون","2D cartoon animation","semi-realistic stylized cartoon look, clean bold outlines, smooth cel-style shading"],["2D","2D رقمي","2D digital animation","clean digital 2D look with smooth gradients and crisp lines"],["2D","2D فيكتور","2D vector animation","flat vector shapes with clean edges and limited gradients"],["2D","موشن جرافيك","2D motion graphics","clean motion-graphics look with bold shapes, icons and smooth transitions"],["2D","سبورة بيضاء (Whiteboard)","whiteboard animation","black marker drawings on a white board with a hand drawing them"],["2D","أنمي","anime-style 2D animation","Japanese anime look with expressive eyes, clean line art and vibrant cel shading"],["2D","فلات ديزاين (Flat)","flat design animation","minimal flat design with solid colors and simple geometric characters"],["2D","قصاصات (Cutout)","cutout animation","characters made of flat cutout pieces with visible joints and paper edges"],["3D","3D واقعي","3D realistic animation","photoreal CGI characters with realistic materials, lighting and physics"],["3D","3D كرتوني","3D cartoon animation","friendly stylized 3D cartoon characters with bright colors"],["3D","3D بيكسار","3D Pixar-inspired animation","Pixar-inspired 3D characters with expressive faces and soft subsurface skin shading"],["3D","3D سينمائي","3D cinematic animation","cinematic 3D CGI with dramatic lighting and depth of field"],["3D","3D منمّق (Stylized)","3D stylized animation","stylized 3D with painterly textures and exaggerated proportions"],["3D","3D شخصيات","3D character animation","detailed 3D characters with expressive rigging and acting"],["3D","3D فانتازيا","3D fantasy animation","magical 3D fantasy world with glowing effects and rich environments"],["فني","قص الورق (Paper Cut)","paper cut animation","layered paper cutouts with depth shadows"],["فني","صلصال (Claymation)","claymation stop-motion animation","handmade clay figures with visible fingerprints on miniature sets"],["فني","ستوب موشن","stop-motion animation","tangible handcrafted puppets and sets shot frame by frame"],["فني","دمى (Puppet)","puppet animation","handmade puppets with fabric textures on a theatrical set"],["فني","ليغو (LEGO)","LEGO brick animation","LEGO minifigures and brick-built sets"],["فني","لباد (Felt)","felt animation","soft felt characters with stitched edges"],["فني","صوف (Wool)","wool animation","fuzzy needle-felted wool characters"],["فني","بلاستيسين","plasticine animation","smooth plasticine characters on handmade sets"],["فني","دايوراما (Diorama)","diorama animation","tiny detailed diorama scenes with a tilt-shift look"],["فني","عالم مصغّر (Miniature)","miniature world animation","handmade miniature world with a macro photography look"],["فني","ورق مطوي (Papercraft)","papercraft animation","folded papercraft characters and sets"],["فني","أوريغامي","origami animation","origami paper-folded characters"],["فني","ظلال (Shadow)","shadow puppet animation","black shadow figures on a softly lit translucent screen"],["أخرى","ستيك مان","stickman animation","simple stick figure characters"],["أخرى","بكسل (Pixel Art)","pixel art animation","retro pixel art with a limited palette"],["أخرى","كوميك (Comic)","comic book animation","comic book panel look with bold ink lines and halftone"],["أخرى","كتاب قصص مصوّر","storybook illustration animation","illustrated storybook look with soft painterly detail"],["أخرى","ألوان مائية","watercolor animation","soft watercolor washes and paper texture"],["أخرى","سكتش (Sketch)","sketch animation","pencil sketch look with visible construction lines"],["أخرى","سيلويت (Silhouette)","silhouette animation","bold black silhouettes against colorful backdrops"],["أخرى","وسائط مختلطة","mixed media animation","mixed-media look combining drawn, photographic and collage elements"],["أخرى","تجريبي","experimental animation","experimental abstract visuals with unconventional shapes and textures"]];
+ANI.forEach(([c,k,a,l])=>{VST[k]={a,f:a+" film",l,x:ANI_X[c]}});
+const ANI_L={};Object.keys(ANI_C).forEach(c=>ANI_L[c]=ANI.filter(t=>t[0]==c).map(t=>t[1]));ANI_L["واقعي"]=["واقعي (Realistic)","سينما 35mm (Arri Alexa)","فانتازيا مظلمة"];
+const CATM={"2D":["رسم يدوي سلس","حركة محدودة"],"3D":["CGI سلسة","تمثيل الشخصيات"],"فني":["متقطعة (Stop-motion)","ناعمة وبطيئة"],"أخرى":["ناعمة وبطيئة"],"واقعي":["حركة سينمائية"]};
+const EAS="انتقالات انسيابية (Easing)",GEO="حركة هندسية",STP="متقطعة (Stop-motion)",SOFT="ناعمة وبطيئة",LIM="حركة محدودة",HD="رسم يدوي سلس",TOON="مبالغة كرتونية",CGI="CGI سلسة",ACT="تمثيل الشخصيات",CIN="حركة سينمائية",STORY="حركة خفيفة للقصة المصورة",SHD="ظلال متحركة",MIX="حركة مختلطة";
+const AM={"2D كرتون":[TOON,HD,LIM],"2D تقليدي":[HD,TOON,LIM],"2D رقمي":[HD,LIM,EAS],"2D فيكتور":[LIM,EAS,GEO],"موشن جرافيك":[EAS,GEO],"سبورة بيضاء (Whiteboard)":["رسم تدريجي"],"أنمي":[LIM,HD],"فلات ديزاين (Flat)":[EAS,GEO,LIM],"قصاصات (Cutout)":["قص ولصق",LIM],"3D واقعي":[CGI,CIN,ACT],"3D كرتوني":[TOON,CGI],"3D بيكسار":[ACT,CGI,TOON],"3D سينمائي":[CIN,CGI],"3D فانتازيا":[CIN,CGI],"3D شخصيات":[ACT,CGI],"قص الورق (Paper Cut)":["قص ولصق",STP],"ورق مطوي (Papercraft)":["طي وتحول",STP],"أوريغامي":["طي وتحول",STP],"ظلال (Shadow)":[SHD,SOFT],"سيلويت (Silhouette)":[SHD,SOFT],"بكسل (Pixel Art)":["حركة بكسلية"],"كوميك (Comic)":[STORY,LIM],"كتاب قصص مصوّر":[STORY,SOFT],"ألوان مائية":["سيولة الألوان المائية",SOFT],"سكتش (Sketch)":["خطوط متذبذبة (Boil)","رسم تدريجي"],"وسائط مختلطة":[MIX],"تجريبي":[MIX,GEO],"ستيك مان":[LIM,TOON]};
+const OLDM={"3D أنيميشن":"3D بيكسار","صلصال Claymation":"صلصال (Claymation)","3D بيكسار (Octane)":"3D بيكسار","أنمي ملحمي (Shinkai)":"أنمي"};
+const catOf=t=>Object.keys(ANI_L).find(c=>ANI_L[c].includes(t));
+const motionsOf=(t,c)=>AM[t]||CATM[c]||[];
+const aniMot=()=>{const t=S.vst,ms=motionsOf(t,catOf(t)),m=ms.includes(S.mot)?S.mot:ms[0];return m&&MOT[m]?"Animation movement style: "+MOT[m]+". ":""};
+function setCat(v){S.vst=ANI_L[v][0];S.mot="";render()}
+function setAType(v){S.vst=v;S.mot="";render()}
+
+/* تعديل 7: ترتيب فئة الأنيميشن ونوع الأنيميشن والحركة المناسبة في سطر واحد متناسق */
+const animUI=()=>{let t=S.vst,c=catOf(t);if(!c){t=OLDM[t]||"2D كرتون";S.vst=t;c=catOf(t)}const ms=motionsOf(t,c);if(!ms.includes(S.mot))S.mot=ms[0];return `<div class="anim-inline-item"><span>فئة الأنيميشن:</span><select onchange="setCat(this.value)">${Object.keys(ANI_C).map(k=>`<option value="${k}" ${k==c?"selected":""}>${ANI_C[k]}</option>`).join("")}</select></div><div class="anim-inline-item"><span>نوع الأنيميشن:</span><select onchange="setAType(this.value)">${ANI_L[c].map(x=>`<option ${x==t?"selected":""}>${x}</option>`).join("")}</select></div><div class="anim-inline-item"><span>الحركة المناسبة:</span><select data-k="mot">${ms.map(m=>`<option ${m==S.mot?"selected":""}>${m}</option>`).join("")}</select></div>`};
+
+function lockAll(){S.chars.forEach(c=>{c.lock=[tp(c)+" aged "+c.age,c.trait,c.look,c.face?"fixed facial features: "+c.face:"",c.outf?"costume lock: "+c.outf:""].filter(Boolean).join(", ")});render();msg("🔒 تم قفل وصف كل شخصية بصيغة ثابتة تُكرّر حرفياً في كل مشهد")}
+const lockCard=()=>`<div class="card"><h3>🔒 ثبات الشخصيات في كل المشاهد</h3><p class="note">كل برومت مشهد يتضمن تلقائياً تعليمات صارمة بألا تتغير ملامح الشخصية ولا ملابسها ولا إكسسواراتها. اضغط الزر لدمج الملامح والزي في وصف ثابت واحد يُكتب بالحرف نفسه في كل مشهد. ولأفضل ثبات: ولّد صورة كل شخصية أولاً واستخدمها كمرجع (Ingredient / إطار بداية) لكل مقطع.</p><button class="p" onclick="lockAll()">🔒 قفل وصف الشخصيات</button></div>`;
+GR.scenes.f=(i,v)=>{const s=S.scenes[i],cs=sc(s);return `scene_${sw(i+1)}: ${envFn(s.place)} (${en(PL,s.place)}); ${cs.map(c=>`${c.fn} (${desc(c)})`).join("; ")||"no characters"}; ${sdir(cs)}${cs.length?ident(false):""}${hasNar()?"The narrator is voice-only and is never depicted. ":""}${s.act||"a moment of the story"}; framing: ${camT(s)}; ${lensT(s)}atmosphere: ${atmT(s)}. ${STYLE}`+vx("scenes",v)};
+
+function gStory(){const cl=S.chars.map(c=>`${c.name||c.fn} (${desc(c)})`).join("; "),d=Math.min(+S.dur||3,10),sec=+mp().sec||8,n=Math.ceil(d*60/sec),ar=S.lang=="العربية",nl=ar?(S.nar=="f"?"الراوية":"الراوي"):"Narrator",dia=(DIA[S.lang]||{})[S.dia],col=dia&&S.dia!="الفصحى"?` Write in natural colloquial ${dia.e}, not formal language.`:"",ex=(S.goal?` Educational goal / moral: ${S.goal}; let the moral emerge from the events and have a character state it naturally in the closing lines.`:"")+(S.age?` Target audience: ${S.age}; use age-appropriate vocabulary and themes, no graphic violence or frightening content unsuitable for this age.`:"");
+ let st;if(S.sty=="nar")st=`NARRATOR-ONLY voice-over script: every line is spoken by the narrator (label each line \"${nl}:\"), characters never speak. Write exactly one narration line per scene (about ${n} lines), each line describing only what is visible in that scene and short enough to be spoken within ${sec} seconds (max ${Math.floor(sec*2.5)} words), in the same order as the scenes.`;else if(S.sty=="mix")st=`DIALOGUE plus a narrator (label narrator lines \"${nl}:\"). Narrator lines must be short (max ${Math.floor(sec*2.2)} words), placed immediately before the dialogue they relate to, and describe only what is visible in that moment so voice-over and picture stay in sync; narrator lines are at most about 20% of all lines.`;else st="DIALOGUE-ONLY script: no narrator, no voice-over, no scene descriptions.";
+ show("story",S.mode=="own"?`Convert the following story into a ${st} Write it in ${dial()} (native script).${col} Format each line as NAME: \"text\". Split into about ${n} short beats (max 2 dialogue lines each, each beat speakable within ${sec} seconds) for a ${d}-minute video. Keep names and speech style culturally fitting (${cult()}).${ex} Story: ${S.own}`:`Write a complete ${st} Write it in ${dial()} (native script).${col} Genre: ${en(GN,S.genre)}. Length: about ${d} minutes (~${n} beats, each speakable within ${sec} seconds, max 2 dialogue lines per beat). Characters: ${cl}. Format each line as NAME: \"text\". Structure: likeable protagonist, conflict, turning point, emotional climax, moral resolution. Names and speech must fit ${cult()}.${ex} Idea: ${S.idea||"choose an original idea"}.`)}
+
+function chk(){const W=[],m=mp(),n=S.scenes.length;if(!S.script.trim())W.push("السكريبت فارغ (تبويب 1).");if(!S.goal)W.push("لم تحدد هدفاً تعليمياً/عبرة (تبويب 1).");if(hasNar()&&!S.scenes.some(s=>s.nr))W.push("اخترت أسلوب الراوي لكن لا يوجد تعليق راوٍ في أي مشهد (اسحبه من السكريبت بسطر يبدأ بـ الراوي:).");if(!hasNar()&&parseScript().some(l=>isNar(l.n)))W.push("السكريبت فيه أسطر راوٍ لكن أسلوب القصة هو حواري بدون راوٍ (غيّره في تبويب 1).");if(/^(3|6)/.test(S.age||"")&&/قتل|دم|ذبح|سلاح|رصاص|يموت|جثة|ضرب/.test(S.script))W.push("السكريبت يحوي كلمات عنف قد لا تناسب الفئة "+S.age+".");if(!(m.ars||"").split(",").map(x=>x.trim()).includes(S.ar))W.push("النسبة "+S.ar+" غير ضمن النسب المدعومة للموديل "+S.model+".");if(!+m.au&&S.scenes.some(s=>s.d.some(d=>d.t)||s.nr))W.push("الموديل "+S.model+" لا يدعم الصوت: ستُولّد مقاطع صامتة مع DUB SCRIPT للدبلجة.");
+ const seen={},fs={};S.chars.forEach((c,i)=>{const nm=(c.name||"").trim(),lb=c.name||c.fn;if(!nm)W.push("الشخصية "+(i+1)+" بلا اسم.");else if(seen[nm])W.push("الاسم "+nm+" مكرر.");else seen[nm]=1;if(fs[c.fn])W.push("اسم الملف "+c.fn+" مكرر.");fs[c.fn]=1;if(!c.look&&!c.lock&&!c.trait&&!c.face&&!c.outf)W.push(lb+": بلا وصف للشكل والملابس، قد يتغيّر بين المشاهد.");if(!S.scenes.some(s=>s.cs.includes(String(i))||s.d.some(d=>d.t&&+d.s==i)))W.push(lb+": لا تظهر في أي مشهد.");if(+m.au&&!c.vs.length)W.push(lb+": لم تحدد نمط صوت.")});
+ S.scenes.forEach((s,i)=>{const p="مشهد "+(i+1)+": ";if(!s.place)W.push(p+"بلا مكان.");if(!sc(s).length)W.push(p+"لا توجد شخصيات.");if(!s.d.some(d=>d.t)&&!s.nr)W.push(p+"بلا حوار أو تعليق.");const t=est(s);if(t>m.sec)W.push(p+"الحوار/التعليق ~"+t.toFixed(1)+" ث، أطول من "+m.sec+" ث.");s.d.forEach(d=>{if(d.t&&!S.chars[+d.s])W.push(p+"متحدث غير موجود.")})});
+ const ac=S.scenes.map(actKey);if(n>=3)["بداية","عقدة","حل"].forEach(a=>{if(!ac.includes(a))W.push("لا يوجد مشهد من جزء "+a+".")});const tot=n*(+m.sec||8),tg=(+S.dur||3)*60;if(Math.abs(tot-tg)>Math.max(8,tg*0.2))W.push("المدة الكلية التقريبية ("+tot+" ث) بعيدة عن المطلوبة ("+tg+" ث): غيّر عدد المشاهد.");
+ $("#o_chk").innerHTML=`<div class="card"><b>${W.length?"⚠️ "+W.length+" ملاحظة":"✅ لا توجد مشاكل"}</b>${W.map(x=>`<div class="note">• ${esc(x)}</div>`).join("")}</div>`}
+
+/* ربط التبويبات المجمعة */
+const V0_base=V[0],V1_base=V[1],V2_base=V[2],V3_base=V[3],V4_base=V[4],V5_base=V[5],V6_base=V[6];
+V[0]=()=>tplCard()+V0_base();
+V[1]=()=>lockCard()+`<div class="card"><h3>🎨 تنويع الشكل والملابس</h3><p class="note">يملأ الملامح والزي الفارغين لكل شخصية بشكل ولون وإكسسوار مختلف، دون تغيير ما كتبته بنفسك.</p><button class="p" onclick="autoLook()">🎨 تنويع تلقائي</button></div>`+V1_base();
+V[2]=()=>{autoSp();return autoCard2()+nameCard()+locCard()+V2_base()};
+V[3]=()=>`<div class="card"><p class="note">✅ الموسيقى والمؤثرات ووصف أصوات الشخصيات تُدمج تلقائياً في برومت الفيديو الواحد لكل مشهد (تبويب 7).</p><div class="row" style="justify-content:flex-start;gap:8px;align-items:center"><select id="mall" style="max-width:220px"><option value="">— موسيقى لكل المشاهد —</option>${Object.keys(MUSIC).map(k=>`<option>${k}</option>`).join("")}</select><button class="s" onclick="muAll()">تطبيق على كل المشاهد</button></div></div>`+musicCard()+V3_base();
+V[4]=()=>V4_base()+`${(S.scenes.forEach((s,i)=>{if(!s.sh)s.sh=shotSug(s,i)}),"")}${camScenes()}<details class="card"><summary><b>⚙️ خيارات متقدمة للمحترفين (اختيارية — يمكنك تجاهلها)</b></summary>${motCard()}</details>${step()}`;
+V[5]=()=>`<div class="card"><h3>🎨 لوحة ألوان الفيلم</h3>${F("اللوحة (تُطبّق على كل البرومتات)",`<select data-k="pal" style="max-width:220px"><option value="">— افتراضية —</option>${Object.keys(PALETTES).map(k=>`<option ${S.pal==k?"selected":""}>${k}</option>`).join("")}</select>`)}</div>`+V5_base()+`<div class="card"><button class="p" onclick="sugAll()">✨ طبّق المقترحات على المشاهد الفارغة</button></div>${atmScenes()}${step()}`;
+V[6]=()=>lipCard()+`<div class="row"><button class="s" onclick="openBoard()">🗂️ لوحة المشاهد (طباعة / PDF)</button></div>`+V6_base();
+
+delete LANG.Hindi;delete LANG.Urdu;delete LANG.Bengali;if(!LANG[S.lang])S.lang="العربية";
+function syncItems(){try{Object.keys(S.items||{}).forEach(g=>{if(!GR[g]||!Array.isArray(S.items[g]))return;const n=GR[g].n(),a=S.items[g];if(a.length===n)return;const r=[];for(let i=0;i<n;i++)r.push(i<a.length?a[i]:GR[g].f(i,S.vr[g+i]||0));S.items[g]=r})}catch(e){}}
+
+let LASTTAB=-1;
+function render(){
+  if(LOCK)return;
+  const tabChanged=LASTTAB!==S.tab;
+  syncItems();
+  nav();
+  $("#v").innerHTML=V[S.tab]()+dl("gl",Object.keys(GN))+dl("gtl",Object.keys(G))+dl("pl",Object.keys(PL))+dl("stl",STY)+dl("vcl",Object.keys(VC))+dl("tl",Object.keys(TONE))+dl("cl",Object.keys(CAM))+dl("al",Object.keys(ATM))+dl("vsl",Object.keys(VST))+dl("agl",["3-5 سنوات","6-8 سنوات","9-12 سنة","مراهقون","جميع الأعمار"])+dl("pll",Object.keys(PALETTES))+dl("ltl",Object.keys(LTONES))+dl("mul",Object.keys(MUSIC))+dl("sfl",Object.keys(SFX))+dl("actl",Object.keys(ACTS))+dl("lnl",Object.keys(LENS));
+  document.querySelectorAll('input[data-k="vst"]').forEach(inp=>{
+    const parent=inp.parentElement;
+    const w=document.createElement("div");
+    if(S.tab==0){
+      w.className="anim-inline-wrap";
+      const lb=inp.previousElementSibling;
+      if(lb&&lb.tagName=="LABEL")lb.remove();
+      w.innerHTML=animUI();
+      if(parent&&parent.parentElement&&parent.parentElement.classList.contains("g")){
+        parent.parentElement.appendChild(w);
+        parent.remove();
+        return;
+      }
+    }else{
+      const lb=inp.previousElementSibling;
+      if(lb&&lb.tagName=="LABEL")lb.remove();
+      w.innerHTML='<div class="note">🎞️ نوع الأنيميشن: <b>'+esc(S.vst)+'</b> — يُغيَّر من تبويب القصة فقط وينعكس على كل البرومتات</div>';
+    }
+    inp.replaceWith(w);
+  });
+  guard();
+  if(tabChanged){
+    LASTTAB=S.tab;
+    try{window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0}catch(e){}
+  }
+}
+
+guard();
+render();
+refreshPS();
+</script>
+</body>
+</html>
